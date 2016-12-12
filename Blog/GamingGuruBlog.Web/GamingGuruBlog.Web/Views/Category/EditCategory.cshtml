@@ -1,0 +1,20 @@
+﻿@model GamingGuruBlog.Data.Models.Category
+
+@{
+    ViewBag.Title = "EditCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Category</h2>
+
+@using (Html.BeginForm("EditCategory", "Category", FormMethod.Post))
+{
+    @Html.HiddenFor(c => c.CategoryId)
+    <div class="form-group">
+        <label class="control-label">Categry Name</label>
+        @Html.TextBoxFor(c => c.CategoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.CategoryName)
+    </div>
+    <input type="submit" value="Create" class="btn btn-default" />
+    @Html.ActionLink("Cancel", "AdminPanel", "Admin", null, new { @class = "btn btn-warning" })
+}

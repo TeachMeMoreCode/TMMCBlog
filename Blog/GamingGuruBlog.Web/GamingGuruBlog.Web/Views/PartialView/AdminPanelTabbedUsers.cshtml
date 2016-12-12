@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNet.Identity
+
+@model List<GamingGuruBlog.Data.Models.User>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Users First Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(user.FirstName, "EditStaticPage", "StaticPage", new { id = User.Identity.GetUserId() }, null)</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

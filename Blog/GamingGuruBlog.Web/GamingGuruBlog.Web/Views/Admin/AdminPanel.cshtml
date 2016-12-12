@@ -1,0 +1,185 @@
+﻿@using Microsoft.AspNet.Identity
+@model GamingGuruBlog.Web.Models.AdminPanelVM
+
+@{
+    ViewBag.Title = "AdminPanel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin Panel</h2>
+
+<hr />
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#userTab" role="tab" data-toggle="tab">Users</a>
+    </li>
+    <li>
+        <a href="#posts" role="tab" data-toggle="tab">Posts</a>
+    </li>
+    <li>
+        <a href="#static" role="tab" data-toggle="tab">Static Pages</a>
+    </li>
+    <li>
+        <a href="#category" role="tab" data-toggle="tab">Category</a>
+    </li>
+    <li>
+        <a href="#other" role="tab" data-toggle="tab">Other</a>
+    </li>
+</ul>
+
+<div class="tab-content clearfix">
+    <div class="tab-pane fade in active" id="userTab">
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*@Html.ActionLink("Assign User A Role", "Index", "BlogPost", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-primary" })*@
+    </div>
+
+    <div class="tab-pane fade" id="static">
+        <br />
+        <table class="table table-hover display" id="static">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sp in Model.StaticPages)
+                {
+                    <tr>
+                        <td style="width:10px">
+                            <a href="@Url.Action("EditStaticPage", "StaticPage", new { id = sp.StaticPageId })" class="btn btn-xs">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit Page"></span>
+                            </a>
+                        </td>
+                        <td>@Html.ActionLink(sp.Title, "StaticPage", "StaticPage", new { id = sp.StaticPageId }, null)</td>
+                        <td>
+                            <form action="@Url.Action("DeleteStaticPage", "StaticPage", new { id = sp.StaticPageId })" method="post" data-toggle="tooltip" data-placement="left" title="Delete Page" class="pull-right">
+                                <button class="close pull-right" onclick="return confirm('Are you sure you want to delete @sp.Title');">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Add Static Page", "AddStaticPage", "StaticPage", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+
+
+    <div class="tab-pane fade" id="category">
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Category Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model.Categories)
+                {
+                    <tr>
+
+                        <td style="width:10px">
+                            <a href="@Url.Action("EditCategory", "Category", new { id = category.CategoryId })" class="btn btn-xs">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit Category"></span>
+                            </a>
+                        </td>
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <form action="@Url.Action("DeleteCategory", "Category", new { id = category.CategoryId })" method="post" data-toggle="tooltip" data-placement="left" title="Delete Category" class="pull-right">
+                                <button class="close pull-right" onclick="return confirm('Are you sure you want to delete @category.CategoryName');">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Add A Category", "AddCategory", "Category", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+
+    <div class="tab-pane fade" id="posts">
+        <br />
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Post Title</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model.BlogPosts)
+                {
+                    <tr>
+                        <td style="width:10px">
+                            <a href="@Url.Action("Edit", "BlogPost", new { id = post.BlogPostId, @class="btn btn-xs"})">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit Post">
+                                </span>
+                            </a>
+                        </td>
+                        <td><span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Go to Post"> @Html.ActionLink(post.Title, "GetBlogPost", "BlogPost", new { id = post.BlogPostId }, null) </span>
+                    </td>
+                        <td>
+                            <form action="@Url.Action("DeleteBlog", "BlogPost", new { id = post.BlogPostId })" method="post" data-toggle="tooltip" data-placement="left" title="Delete Post" class="pull-right">
+                                <button class="close pull-right" onclick="return confirm('Are you sure you want to delete @post.Title');">X</button>
+                            </form>
+                        </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Create A Post", "Post", "BlogPost", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+    <div class="tab-pane fade" id="other">
+        <br />
+        <button id="toasty-button" style="padding:10px;">Show Kipp</button>
+    </div>
+
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+
+
+
+
+
+

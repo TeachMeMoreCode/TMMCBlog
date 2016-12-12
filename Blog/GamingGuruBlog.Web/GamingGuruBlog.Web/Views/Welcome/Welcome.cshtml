@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/app/WelcomePage/LandingPage.css" rel="stylesheet" />
+    <title>Welcome</title>
+</head>
+<body>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h1 style="color:white">Welcome to Gaming Guru</h1>
+                        <p style="color:white"> Your number one source for all video game news! Updated every 15 minutes with new reviews, demos and articles</p>
+                        @Html.ActionLink("Enter Blog","Index","Home",null, new {@class = "btn btn-primary btn-xl"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

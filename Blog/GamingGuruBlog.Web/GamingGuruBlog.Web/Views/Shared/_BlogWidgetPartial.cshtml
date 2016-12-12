@@ -1,0 +1,51 @@
+﻿@using GamingGuruBlog.Data.Models;
+@model GamingGuruBlog.Web.Models.AllBlogPostsVM
+
+<link href="~/Content/BlogWidget.css" rel="stylesheet" />
+
+<div class="col-sm-4 ">
+    <div class="sidebar-nav affix">
+        @*<div class="well">
+                <h4>Blog Search</h4>
+                <form action="/Home/Search" role="search" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search" name="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>*@
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Categories</h4>
+            </div>
+            <ul class="list-group">
+                @foreach (var categorie in Model.AllCategories)
+            {
+                    <li class="list-group-item">@Html.ActionLink(categorie.CategoryName, "BlogPostsByCategory", "BlogPost", new { id = categorie.CategoryId }, null)</li>
+                }
+            </ul>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Tags</h4>
+            </div>
+            <div class="panel-body" id="myCanvasContainer">
+                <canvas id="myCanvas">
+                    <ul>
+                        @foreach (var tag in Model.AllTags)
+                        {
+                            <li class="list-inline-item">@Html.ActionLink(tag.TagName, "BlogPostsByTag", "BlogPost", new { id = tag.TagId }, null)</li>
+                        }
+                    </ul>
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>
+@*</div>*@
+
+

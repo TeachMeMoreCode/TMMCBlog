@@ -1,0 +1,64 @@
+﻿@model GamingGuruBlog.Web.Models.BlogPostVM
+@{
+    ViewBag.Title = "Post";
+}
+
+<h2>Add Blog Post</h2>
+<div class="row">
+    <div class="col-xs-6">
+        @using (Html.BeginForm("Post", "BlogPost", FormMethod.Post, new { id = "postForm" }))
+        {
+           
+
+
+            @Html.HiddenFor(m => m.BlogPost.DateCreatedUTC)
+            @Html.HiddenFor(m => m.BlogPost.UserId)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Categories, new { style = "font-size:24px" })
+                @Html.ListBoxFor(model => model.CategoryArray, Model.CategoryList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryArray)
+               
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BlogPost.Title, new { style = "font-size:24px" })
+                @Html.TextBoxFor(model => model.BlogPost.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BlogPost.Title)
+               
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BlogPost.Body, new { style = "font-size:24px" })
+                @Html.EditorFor(model => model.BlogPost.Body, new { @class = "tinyMCE" })
+                @Html.ValidationMessageFor(model => model.BlogPost.Body)
+               
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BlogPost.Summary, new { style = "font-size:24px" })
+                @Html.EditorFor(model => model.BlogPost.Summary, new { @class = "tinyMCE" })
+                @Html.ValidationMessageFor(model => model.BlogPost.Summary)
+                
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tag, new { style = "font-size:24px" })
+                @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", @Value = "" })
+            </div>
+            <div class="form-group">
+                <button  type="submit" value="Save" class="btn btn-primary">Save</button>
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class ="btn btn-warning"})
+            </div>
+        }
+        
+    </div>
+</div>
+
+@section scripts
+    {
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/Scripts/app/jquery-validate-defaults.js"></script>
+        <script src="~/Scripts/app/postValidation.js"></script>
+        <script src="~/Scripts/bootstrap-tag/js/bootstrap-tag.js"></script>
+    }
+

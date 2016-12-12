@@ -1,0 +1,36 @@
+﻿@model GamingGuruBlog.Data.Models.StaticPage
+
+@{
+    ViewBag.Title = "EditStaticPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Page</h2>
+
+@using (Html.BeginForm("EditStaticPage", "StaticPage", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(s => s.StaticPageId)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label">Title</label>
+        @Html.TextBoxFor(s => s.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor((s => s.Title))
+    </div>
+    <div class="form-group">
+        <label class="control-label">Body</label>
+        @Html.EditorFor(s => s.Body, new { @class = ".tinyMCE" })
+        @Html.ValidationMessageFor((s => s.Body))
+    </div>
+    <div class="form-group">
+        <button type="submit" value="Save" class="btn btn-primary">Save</button>
+        @Html.ActionLink("Cancel", "AdminPanel", "Admin", null, new { @class = "btn btn-warning" })
+    </div>
+
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+

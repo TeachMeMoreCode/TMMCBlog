@@ -1,0 +1,6 @@
+﻿@model List<GamingGuruBlog.Data.Models.StaticPage>
+
+@foreach (var page in Model)
+{
+    <li>@Html.ActionLink(page.Title,"StaticPage","StaticPage",new { id = page.StaticPageId },null)</li>
+}

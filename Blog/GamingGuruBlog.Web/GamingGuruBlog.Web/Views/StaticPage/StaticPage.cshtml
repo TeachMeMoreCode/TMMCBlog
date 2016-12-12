@@ -1,0 +1,15 @@
+﻿@model GamingGuruBlog.Data.Models.StaticPage
+
+@{
+    ViewBag.Title = "StaticPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+    <h2>@Model.Title</h2>
+
+    <p>@Html.Raw(Model.Body)</p>
+}
+
+

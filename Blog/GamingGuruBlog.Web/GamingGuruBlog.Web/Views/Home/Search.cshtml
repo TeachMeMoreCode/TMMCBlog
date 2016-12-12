@@ -1,0 +1,47 @@
+﻿@model GamingGuruBlog.Web.Models.AllBlogPostsVM
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+
+@foreach (var blogPost in Model.AllBlogPosts)
+{
+    <article>
+        <h3>@Html.ActionLink(blogPost.Title, "GetBlogPost", "Home", new { id = blogPost.BlogPostId }, null)</h3>
+        <div class="group1 col-sm-6 col-md-6">
+            <span class="glyphicon glyphicon-pencil"></span>by @blogPost.Author.FirstName @blogPost.Author.LastName
+        </div>
+        <div class="group2 col-sm-6 col-md-6">
+            <span class="glyphicon glyphicon-time text-right"></span><span class="text-right">Posted on @Html.DisplayFor(m => blogPost.DateCreatedUTC)</span>
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <span class="glyphicon glyphicon-folder-open"></span>
+            @foreach (var category in Model.AllCategories)
+            {
+                <a href="#">@category.CategoryName </a>
+            }
+            <span class="glyphicon glyphicon-bookmark"></span>
+            @foreach (var tag in Model.AllTags)
+            {
+                <a href="#">@tag.TagName </a>
+            }
+
+        </div>
+        <hr>
+        <!-- Post Content -->
+        @Html.Raw(blogPost.Summary)
+        @Html.ActionLink("Continue Reading...", "GetBlogPost", "Home", new { id = blogPost.BlogPostId }, htmlAttributes: "text-right")
+        @*<p class="text-right"><a href="singlepost.html" class="text-right">continue reading...</a></p>*@
+
+        <hr>
+
+    </article>
+}
+
+<ul class="pager">
+    <li class="previous"><a href="#">&larr; Previous</a></li>
+    <li class="next"><a href="#">Next &rarr;</a></li>
+</ul>

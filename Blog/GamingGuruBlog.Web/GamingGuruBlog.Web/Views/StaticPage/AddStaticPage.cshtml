@@ -1,0 +1,42 @@
+﻿@model GamingGuruBlog.Data.Models.StaticPage
+
+@{
+    ViewBag.Title = "AddStaticPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Static Page</h2>
+<div class="row">
+    <div class="col-xs-6">
+        @using (Html.BeginForm("AddStaticPage", "StaticPage", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.UserId)
+            @Html.ValidationSummary(true, "Required elements are missing", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label" style="font-size:24px">Title</label>
+               
+                @Html.TextBoxFor(c => c.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(c => c.Title)
+            </div>
+
+
+            @*@Html.LabelFor(model => model.Title, new { style = "font-size:24px" })
+            @Html.TextAreaFor(model => model.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title)*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Body, new { style = "font-size:24px" })
+                @Html.EditorFor(model => model.Body, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Body)
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Create" class="btn btn-primary">Create</button>
+                @Html.ActionLink("Cancel", "AdminPanel", "Admin", null, new { @class = "btn btn-warning" })
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

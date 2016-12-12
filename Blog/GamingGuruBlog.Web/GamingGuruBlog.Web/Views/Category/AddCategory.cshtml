@@ -1,0 +1,20 @@
+﻿@model GamingGuruBlog.Data.Models.Category
+
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add A Category</h2>
+
+
+@using (Html.BeginForm("AddCategory", "Category", FormMethod.Post))
+{
+    @Html.HiddenFor(c => c.CategoryId)
+    <div class="form-group">
+        <label class="control-label">Categry Name</label>
+        @Html.TextBoxFor(c=>c.CategoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c=> c.CategoryName)
+    </div>
+    <input type="submit" value="Create" class="btn btn-default" />
+}
