@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GamingGuruBlog.Database", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingGuruBlog.Test", "GamingGuruBlog.Test\GamingGuruBlog.Test.csproj", "{EDB2894D-3143-44B6-A950-F5C1C7411D48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingGuruBlog.Domain", "GamingGuruBlog.Domain\GamingGuruBlog.Domain.csproj", "{886D3C0C-5A80-47E1-87D3-77841D5197B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{886D3C0C-5A80-47E1-87D3-77841D5197B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886D3C0C-5A80-47E1-87D3-77841D5197B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886D3C0C-5A80-47E1-87D3-77841D5197B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886D3C0C-5A80-47E1-87D3-77841D5197B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
