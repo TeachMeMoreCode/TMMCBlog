@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingGuruBlog.Web", "GamingGuruBlog.Web\GamingGuruBlog.Web.csproj", "{C006353F-98B0-4383-972F-6B23433D72D5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GamingGuruBlog.Database", "GamingGuruBlog.Database\GamingGuruBlog.Database.sqlproj", "{42EA6582-DEE3-421B-91AD-12F033AEE44B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingGuruBlog.Test", "GamingGuruBlog.Test\GamingGuruBlog.Test.csproj", "{EDB2894D-3143-44B6-A950-F5C1C7411D48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingGuruBlog.BLL", "GamingGuruBlog.BLL\GamingGuruBlog.BLL.csproj", "{04A4E6F1-E4C7-49D1-B29B-1722B65A1B9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDB2894D-3143-44B6-A950-F5C1C7411D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A4E6F1-E4C7-49D1-B29B-1722B65A1B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A4E6F1-E4C7-49D1-B29B-1722B65A1B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A4E6F1-E4C7-49D1-B29B-1722B65A1B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A4E6F1-E4C7-49D1-B29B-1722B65A1B9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

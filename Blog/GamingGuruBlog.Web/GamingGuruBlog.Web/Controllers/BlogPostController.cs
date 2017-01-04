@@ -1,5 +1,6 @@
 ﻿using GamingGuruBlog.Data.Interfaces;
 using GamingGuruBlog.Web.Models;
+using GamingGuruBlog;
 using System;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace GamingGuruBlog.Web.Controllers
         private IBlogCategoryRepository _blogCategoryRepo;
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
+        //private BlogServices _services;
 
         public BlogPostController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
         {
@@ -129,6 +131,26 @@ namespace GamingGuruBlog.Web.Controllers
             return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult DeleteBlog(int id)
+        {
+            _blogPostRepo.DeleteBlogPost(id);
+            return RedirectToAction("AdminPanel", "Admin");
+        }
+
+
+        public BlogPostVM GetSinglePostVM(int id)
+        {
+            BlogPostVM populatedBlogPost = new BlogPostVM();
+            populatedBlogPost.BlogPost = _blogPostRepo.GetBlogPost(id);
+            populatedBlogPost.BlogPost.BlogPostId = id;
+            populatedBlogPost.Categories = _categoryRepo.GetAllCategories();
+            populatedBlogPost.Tags = _tagRepo.GetAllTags();
+            return populatedBlogPost;
+        }
+
         private BlogPostVM PopulatedCategorySelectListItem()
         {
             BlogPostVM blogPostVM = new BlogPostVM();
@@ -151,25 +173,6 @@ namespace GamingGuruBlog.Web.Controllers
             }
 
             return returnedBlogPost;
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public ActionResult DeleteBlog(int id)
-        {
-            _blogPostRepo.DeleteBlogPost(id);
-            return RedirectToAction("AdminPanel", "Admin");
-        }
-
-
-        public BlogPostVM GetSinglePostVM(int id)
-        {
-            BlogPostVM populatedBlogPost = new BlogPostVM();
-            populatedBlogPost.BlogPost = _blogPostRepo.GetBlogPost(id);
-            populatedBlogPost.BlogPost.BlogPostId = id;
-            populatedBlogPost.Categories = _categoryRepo.GetAllCategories();
-            populatedBlogPost.Tags = _tagRepo.GetAllTags();
-            return populatedBlogPost;
         }
     }
 }
