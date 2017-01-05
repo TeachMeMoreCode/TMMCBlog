@@ -1,7 +1,7 @@
-﻿using GamingGuruBlog.Data.Interfaces;
+﻿using GamingGuruBlog.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using GamingGuruBlog.Data.Models;
+using GamingGuruBlog.Domain.Models;
 using System.Data.SqlClient;
 using Dapper;
 

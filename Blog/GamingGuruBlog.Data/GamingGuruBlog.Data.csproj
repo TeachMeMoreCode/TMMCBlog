@@ -87,6 +87,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GamingGuruBlog.Web\GamingGuruBlog.Domain\GamingGuruBlog.Domain.csproj">
+      <Project>{886d3c0c-5a80-47e1-87d3-77841d5197b4}</Project>
+      <Name>GamingGuruBlog.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

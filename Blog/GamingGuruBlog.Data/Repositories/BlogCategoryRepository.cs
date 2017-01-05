@@ -1,4 +1,4 @@
-﻿using GamingGuruBlog.Data.Interfaces;
+﻿using GamingGuruBlog.Domain.Interfaces;
 using System.Data.SqlClient;
 using Dapper;
 

@@ -1,12 +1,6 @@
 ﻿using Dapper;
-using GamingGuruBlog.Data.Interfaces;
-using GamingGuruBlog.Data.Models;
-using System;
-using System.Collections.Generic;
+using GamingGuruBlog.Domain.Interfaces;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Data.Repositories
 {
