@@ -1,4 +1,4 @@
-﻿using GamingGuruBlog.Data.Models;
+﻿using GamingGuruBlog.Domain.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
