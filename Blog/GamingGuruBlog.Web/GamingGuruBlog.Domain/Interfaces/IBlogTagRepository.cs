@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamingGuruBlog.Data.Interfaces
+namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IBlogTagRepository
     {

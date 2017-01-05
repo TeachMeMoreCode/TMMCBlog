@@ -2,7 +2,7 @@
 using GamingGuruBlog.Domain.Models;
 using System.Collections.Generic;
 
-namespace GamingGuruBlog.Data.Interfaces
+namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IStaticPageRepository
     {

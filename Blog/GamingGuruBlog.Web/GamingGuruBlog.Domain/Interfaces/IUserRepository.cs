@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GamingGuruBlog.Domain.Models;
 
-namespace GamingGuruBlog.Data.Interfaces
+namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IUserRepository
     {
