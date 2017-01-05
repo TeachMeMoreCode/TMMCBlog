@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 
-namespace GamingGuruBlog.Data.Models
+namespace GamingGuruBlog.Domain.Models
 {
     public class BlogPost
     {
