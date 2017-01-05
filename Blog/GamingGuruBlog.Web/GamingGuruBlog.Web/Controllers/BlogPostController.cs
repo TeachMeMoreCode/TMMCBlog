@@ -1,4 +1,4 @@
-﻿using GamingGuruBlog.Data.Interfaces;
+﻿using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Web.Models;
 using GamingGuruBlog;
 using System;
