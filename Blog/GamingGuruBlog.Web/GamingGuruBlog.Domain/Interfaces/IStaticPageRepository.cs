@@ -1,10 +1,6 @@
 ﻿
-using GamingGuruBlog.Data.Models;
-using System;
+using GamingGuruBlog.Domain.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Data.Interfaces
 {

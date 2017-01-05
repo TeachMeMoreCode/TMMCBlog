@@ -71,6 +71,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Interfaces\IBlogCategoryRepository.cs" />
+    <Compile Include="Interfaces\IBlogPostRepository.cs" />
+    <Compile Include="Interfaces\IBlogTagRepository.cs" />
+    <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\IStaticPageRepository.cs" />
+    <Compile Include="Interfaces\ITagRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Models\BlogCategory.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogTag.cs" />
