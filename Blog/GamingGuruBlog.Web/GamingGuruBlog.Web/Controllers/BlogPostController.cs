@@ -1,4 +1,5 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain;
 using GamingGuruBlog.Web.Models;
 using GamingGuruBlog;
 using System;
@@ -19,7 +20,7 @@ namespace GamingGuruBlog.Web.Controllers
         private IBlogCategoryRepository _blogCategoryRepo;
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
-        //private BlogServices _services;
+        private Services _services;
 
         public BlogPostController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
         {
@@ -29,6 +30,7 @@ namespace GamingGuruBlog.Web.Controllers
             _blogCategoryRepo = blogCategoryRepository;
             _blogTagRepo = blogTagRepo;
             _tagRepo = tagRepo;
+            _services = new Services();
 
         }
 

@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GamingGuruBlog.Domain;
+using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Web.Models;
 
 namespace GamingGuruBlog.Web
 {
     public class UIConverter
     {
-        private Services _services;
+        private IServices _services;
 
-        public UIConverter()
+        public UIConverter(IServices _passedInServices)
         {
-            _services = new Services();
+            _services = _passedInServices;
         }
 
 
-        public BlogPostVM GetBlogPostVM(int id)
+        public void AddNewBlogPost(BlogPostVM newBlogPost)
         {
 
         }

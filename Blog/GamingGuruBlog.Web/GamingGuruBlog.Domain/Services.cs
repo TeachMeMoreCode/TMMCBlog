@@ -1,4 +1,5 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 
 namespace GamingGuruBlog.Domain
 {
@@ -23,7 +24,11 @@ namespace GamingGuruBlog.Domain
 
         }
 
-
+        public int AddNewBlogPost(BlogPost newPost)
+        {
+            int newBlogId = _blogPostRepo.AddBlogPost(newPost);
+            return newBlogId;
+        }
 
     }
 }
