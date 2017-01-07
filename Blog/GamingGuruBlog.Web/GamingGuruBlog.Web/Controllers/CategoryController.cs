@@ -58,7 +58,7 @@ namespace GamingGuruBlog.Web.Controllers
             try
             {
                 _categoryRepo.AddCategory(newCategory);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AdminPanel", "Admin");
             }
             catch (Exception)
             {
