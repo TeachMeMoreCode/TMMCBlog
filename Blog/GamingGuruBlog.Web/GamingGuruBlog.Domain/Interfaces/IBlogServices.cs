@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace GamingGuruBlog.Domain.Interfaces
 {
-    public interface IServices
+    public interface IBlogServices
     {
-        int NewBlogPost(BlogPost newPost);
+        BlogPost CreateNewBlogPost(string newPost);
+        List<Category> GetAllCategories();
     }
 }

@@ -1,9 +1,11 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Domain.Models;
+using System;
+using System.Collections.Generic;
 
 namespace GamingGuruBlog.Domain
 {
-    public class Services
+    public class BlogServices
     {
         private IBlogPostRepository _blogPostRepo;
         private ICategoryRepository _categoryRepo;
@@ -11,9 +13,9 @@ namespace GamingGuruBlog.Domain
         private IBlogCategoryRepository _blogCategoryRepo;
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
-        //private BlogServices _services;
 
-        public Services(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
+
+        public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
         {
             _blogPostRepo = blogPostRepository;
             _categoryRepo = categoryRepository;
@@ -24,11 +26,26 @@ namespace GamingGuruBlog.Domain
 
         }
 
+        public BlogPost CreateNewBlogPost(String userID)
+        {
+            BlogPost newBlogPost = new BlogPost();
+            newBlogPost.DateCreatedUTC = DateTime.UtcNow;
+            newBlogPost.UserId = userID;
+            return newBlogPost;
+
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            return _categoryRepo.GetAllCategories();
+        }
+
         public int AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
             return newBlogId;
         }
+
 
     }
 }
