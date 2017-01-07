@@ -1,9 +1,6 @@
-﻿using GamingGuruBlog.Data.Interfaces;
-using GamingGuruBlog.Data.Models;
+﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GamingGuruBlog.Web.Controllers
