@@ -70,8 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IServices.cs" />
-    <Compile Include="Services.cs" />
+    <Compile Include="Interfaces\IBlogServices.cs" />
+    <Compile Include="BlogServices.cs" />
     <Compile Include="Interfaces\IBlogCategoryRepository.cs" />
     <Compile Include="Interfaces\IBlogPostRepository.cs" />
     <Compile Include="Interfaces\IBlogTagRepository.cs" />

@@ -1,5 +1,5 @@
-﻿using GamingGuruBlog.Data.Interfaces;
-using GamingGuruBlog.Data.Models;
+﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using GamingGuruBlog.Web.Models;
 using PagedList;
 using System.Collections.Generic;
