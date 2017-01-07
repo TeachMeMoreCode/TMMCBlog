@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GamingGuruBlog.Domain
 {
-    public class BlogServices
+    public class BlogServices : IBlogServices
     {
         private IBlogPostRepository _blogPostRepo;
         private ICategoryRepository _categoryRepo;
