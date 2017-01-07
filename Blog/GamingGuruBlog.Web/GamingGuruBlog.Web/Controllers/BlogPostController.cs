@@ -20,9 +20,10 @@ namespace GamingGuruBlog.Web.Controllers
         private IBlogCategoryRepository _blogCategoryRepo;
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
-        private Services _services;
 
-        public BlogPostController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
+        private IBlogServices _blogServices;
+
+        public BlogPostController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo, IBlogServices newBlogServices)
         {
             _blogPostRepo = blogPostRepository;
             _categoryRepo = categoryRepository;
@@ -30,7 +31,7 @@ namespace GamingGuruBlog.Web.Controllers
             _blogCategoryRepo = blogCategoryRepository;
             _blogTagRepo = blogTagRepo;
             _tagRepo = tagRepo;
-            _services = new Services();
+            _blogServices = newBlogServices;
 
         }
 
@@ -46,10 +47,14 @@ namespace GamingGuruBlog.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Post()
         {
-            var model = PopulatedCategorySelectListItem();
-            model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
-            model.BlogPost.UserId = User.Identity.GetUserId();
+            UIConverter helper = new UIConverter(_blogServices);
+            BlogPostVM model = helper.CreateNewBlogPostVM(User.Identity.GetUserId());
             return View(model);
+
+            //var model = PopulatedCategorySelectListItem();
+            //model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
+            //model.BlogPost.UserId = User.Identity.GetUserId();
+            //return View(model);
         }
 
         [Authorize(Roles = "Admin")]
