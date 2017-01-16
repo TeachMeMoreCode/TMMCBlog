@@ -67,5 +67,22 @@ namespace GamingGuruBlog.Data.Repositories
 
             return allCategories;
         }
+
+        public List<Category> GetAssignedcategories(int blogID)
+        {
+            if (blogID > 0)
+            {
+                using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+                {
+                    List<Category> assignedCategories = new List<Category>;
+                    assignedCategories = connection.Query<Category>($"SELECT * FROM BlogPost AS bp JOIN BlogCategory AS bc ON bp.BlogPostID = bc.BlogPostID JOIN Category AS cat ON bc.CategoryID = cat.CategoryID WHERE bp.BlogPostID = {blogID}"); 
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

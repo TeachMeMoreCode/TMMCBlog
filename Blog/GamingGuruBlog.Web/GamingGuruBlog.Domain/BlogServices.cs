@@ -46,6 +46,11 @@ namespace GamingGuruBlog.Domain
             return newBlogId;
         }
 
+        public List<Category> GetAssignedCategories(int blogID)
+        {
+
+        }
+
 
     }
 }

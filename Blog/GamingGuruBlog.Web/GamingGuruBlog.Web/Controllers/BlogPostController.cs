@@ -47,14 +47,14 @@ namespace GamingGuruBlog.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Post()
         {
-            UIConverter helper = new UIConverter(_blogServices);
-            BlogPostVM model = helper.CreateNewBlogPostVM(User.Identity.GetUserId());
-            return View(model);
-
-            //var model = PopulatedCategorySelectListItem();
-            //model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
-            //model.BlogPost.UserId = User.Identity.GetUserId();
+            //UIConverter helper = new UIConverter(_blogServices);
+            //BlogPostVM model = helper.CreateNewBlogPostVM(User.Identity.GetUserId());
             //return View(model);
+
+            var model = PopulatedCategorySelectListItem();
+            model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
+            model.BlogPost.UserId = User.Identity.GetUserId();
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
