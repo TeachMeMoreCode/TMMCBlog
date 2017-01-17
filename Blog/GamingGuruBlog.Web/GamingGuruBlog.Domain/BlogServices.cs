@@ -48,7 +48,7 @@ namespace GamingGuruBlog.Domain
 
         public List<Category> GetAssignedCategories(int blogID)
         {
-
+            return _categoryRepo.GetAssignedcategories(blogID);
         }
 
 

@@ -25,17 +25,17 @@ namespace GamingGuruBlog.Web
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
             //newBlogPostVM.BlogPost = _blogServices.CreateNewBlogPost(userID);
-            List<Category> assignedcategories = _blogServices.
+            List<Category> assignedcategories = _blogServices.GetAssignedCategories(blogPost.BlogPostId);
             List<Category> allCategories = _blogServices.GetAllCategories();
 
             newBlogPostVM.CategoryList = CategorySelectListItemList(allCategories);
             return newBlogPostVM;
         }
 
-        public BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
-        {
+        //public BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
+        //{
 
-        }
+        //}
 
         //public static BlogPost ConvertVMToBlogPost(BlogPostVM newBlogPost)
         //{

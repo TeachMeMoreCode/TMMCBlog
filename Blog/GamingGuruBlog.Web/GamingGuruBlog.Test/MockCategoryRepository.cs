@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using GamingGuruBlog.Data.Interfaces;
-using GamingGuruBlog.Data.Models;
+using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using System.Linq;
 
 namespace GamingGuruBlog.Test
@@ -43,6 +43,11 @@ namespace GamingGuruBlog.Test
         }
 
         public Category GetCategory(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Category> GetAssignedcategories(int blogID)
         {
             throw new NotImplementedException();
         }

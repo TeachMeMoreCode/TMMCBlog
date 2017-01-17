@@ -10,5 +10,6 @@ namespace GamingGuruBlog.Domain.Interfaces
         void DeleteCategory(int id);
         void AddCategory(Category newCategory);
         void EditCategory(Category updatedCategory);
+        List<Category> GetAssignedcategories(int blogID);
     }
 }
