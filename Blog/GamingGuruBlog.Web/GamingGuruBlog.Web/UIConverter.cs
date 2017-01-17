@@ -10,17 +10,17 @@ using System.Web.Mvc;
 
 namespace GamingGuruBlog.Web
 {
-    public class UIConverter
+    public static class UIConverter
     {
-        private IBlogServices _blogServices;
+        private static IBlogServices _blogServices;
 
-        public UIConverter(IBlogServices _passedInServices)
+        static UIConverter()
         {
-            _blogServices = _passedInServices;
+            _blogServices = new IBlogServices;
         }
 
 
-        public BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost)
+        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost)
         {
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
@@ -32,7 +32,7 @@ namespace GamingGuruBlog.Web
             return newBlogPostVM;
         }
 
-        public BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
+        public static BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
         {
             int blogID = _blogServices.AddNewBlogPost(blogPostVM.BlogPost);
             foreach (var category in blogPostVM.CategoryArray)
@@ -57,7 +57,7 @@ namespace GamingGuruBlog.Web
 
         //}
 
-        private List<SelectListItem> CategorySelectListItemList(List<Category> allcategories)
+        private static List<SelectListItem> CategorySelectListItemList(List<Category> allcategories)
         {
             List<SelectListItem> categoryList = new List<SelectListItem>();
             foreach (var category in allcategories)
