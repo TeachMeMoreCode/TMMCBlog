@@ -12,11 +12,11 @@ namespace GamingGuruBlog.Web
 {
     public static class UIConverter
     {
-        private static IBlogServices _blogServices;
+        private static IBlogServices _blogServices; // how the hell does this work for a static class?!
 
         static UIConverter()
         {
-            _blogServices = new IBlogServices;
+            // ?!
         }
 
 
