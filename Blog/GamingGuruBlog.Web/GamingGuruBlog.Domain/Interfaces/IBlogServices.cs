@@ -9,5 +9,9 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<Category> GetAllCategories();
         int AddNewBlogPost(BlogPost newPost);
         List<Category> GetAssignedCategories(int blogID);
+        void AddCategoryToBlogPost(int blogPostID, int category);
+        List<Tag> AddAllTags(string[] tagNames);
+        void AddTagToBlog(int blogID, int tagID);
+        BlogPost GetBlogPost(int blogID);
     }
 }

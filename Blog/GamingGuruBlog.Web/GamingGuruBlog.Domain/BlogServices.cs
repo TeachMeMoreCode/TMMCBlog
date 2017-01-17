@@ -35,6 +35,11 @@ namespace GamingGuruBlog.Domain
 
         }
 
+        public BlogPost GetBlogPost(int blogID)
+        {
+            return _blogPostRepo.GetBlogPost(blogID);
+        }
+
         public List<Category> GetAllCategories()
         {
             return _categoryRepo.GetAllCategories();
@@ -51,6 +56,19 @@ namespace GamingGuruBlog.Domain
             return _categoryRepo.GetAssignedcategories(blogID);
         }
 
+        public void AddCategoryToBlogPost(int blogPostID, int category)
+        {
+            _blogCategoryRepo.AddCategoryToBlog(blogPostID, category);
+        }
 
+        public List<Tag> AddAllTags(string[] tagNames)
+        {
+            return _tagRepo.AddAllTags(tagNames);
+        }
+
+        public void AddTagToBlog(int blogID, int tagID)
+        {
+            _blogTagRepo.AddTagToBlog(blogID, tagID);
+        }
     }
 }

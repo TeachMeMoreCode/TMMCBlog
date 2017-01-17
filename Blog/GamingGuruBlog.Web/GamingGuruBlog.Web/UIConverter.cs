@@ -32,10 +32,25 @@ namespace GamingGuruBlog.Web
             return newBlogPostVM;
         }
 
-        //public BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
-        //{
+        public BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
+        {
+            int blogID = _blogServices.AddNewBlogPost(blogPostVM.BlogPost);
+            foreach (var category in blogPostVM.CategoryArray)
+            {
+                _blogServices.AddCategoryToBlogPost(blogID, int.Parse(category));
+            }
 
-        //}
+            string[] postTags = blogPostVM.Tag.TagName.ToLower().Split(' ');
+            blogPostVM.Tags = _blogServices.AddAllTags(postTags);
+
+            foreach (var tag in blogPostVM.Tags)
+            {
+                _blogServices.AddTagToBlog(blogID, tag.TagId);
+            }
+
+            return _blogServices.GetBlogPost(blogID);
+
+        }
 
         //public static BlogPost ConvertVMToBlogPost(BlogPostVM newBlogPost)
         //{
