@@ -111,7 +111,7 @@ namespace GamingGuruBlog.Web.Controllers
                 }
 
                 string[] postTags = editedBlogPost.Tag.TagName.ToLower().Split(' ');
-                editedBlogPost.Tags = _tagRepo.SelectAllTags(postTags);
+                editedBlogPost.Tags = _tagRepo.AddAllTags(postTags);
                 _blogTagRepo.DeleteTagFromBlog(blogPostID);
                 foreach (var tag in editedBlogPost.Tags)
                 {

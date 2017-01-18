@@ -12,9 +12,9 @@ namespace GamingGuruBlog.Web.Models
         public string[] CategoryArray { get; set; }
         public List<SelectListItem> CategoryList { get; set; }
         public List<Category> Categories { get; set; }
-        public List<Tag> Tags { get; set; }
+        public List<Tag> Tags { get; set; } // this is to hold all current assigned Tags to the blog. For processing only (See BlogPost Controller: Edit POST).
         public Tag Tag { get; set;}
-        public string TagString { get; set; }
+        public string TagString { get; set; } // this is to display current values (of Tags) in editing a blog
 
         public BlogPostVM()
         {

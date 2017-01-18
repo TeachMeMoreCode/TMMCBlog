@@ -10,14 +10,10 @@ using System.Web.Mvc;
 
 namespace GamingGuruBlog.Web
 {
-    public static class UIConverter
+    public static class WebServices
     {
         private static IBlogServices _blogServices; // how the hell does this work for a static class?!
 
-        static UIConverter()
-        {
-            // ?!
-        }
 
 
         public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> relatedTags)
@@ -25,8 +21,7 @@ namespace GamingGuruBlog.Web
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
             newBlogPostVM.CategoryList = CreateSelectListItemList(allCategories);
-            // newBlogPostVM. naming conventions for BlogPostVM properites are confusing. Possibly change them.
-            //newBlogPostVM.BlogPost = _blogServices.CreateNewBlogPost(userID);
+            newBlogPostVM.TagString = string.Join(" ", blogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
 
             return newBlogPostVM;
         }
