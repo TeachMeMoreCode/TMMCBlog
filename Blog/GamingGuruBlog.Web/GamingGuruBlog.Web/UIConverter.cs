@@ -20,15 +20,14 @@ namespace GamingGuruBlog.Web
         }
 
 
-        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost)
+        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> relatedTags)
         {
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
+            newBlogPostVM.CategoryList = CreateSelectListItemList(allCategories);
+            // newBlogPostVM. naming conventions for BlogPostVM properites are confusing. Possibly change them.
             //newBlogPostVM.BlogPost = _blogServices.CreateNewBlogPost(userID);
-            List<Category> assignedcategories = _blogServices.GetAssignedCategories(blogPost.BlogPostId);
-            List<Category> allCategories = _blogServices.GetAllCategories();
 
-            newBlogPostVM.CategoryList = CategorySelectListItemList(allCategories);
             return newBlogPostVM;
         }
 
@@ -57,19 +56,34 @@ namespace GamingGuruBlog.Web
 
         //}
 
-        private static List<SelectListItem> CategorySelectListItemList(List<Category> allcategories)
+        private static List<SelectListItem> CreateSelectListItemList(List<Category> allCategories)
         {
-            List<SelectListItem> categoryList = new List<SelectListItem>();
-            foreach (var category in allcategories)
+            List<SelectListItem> categorySelectListItemList = new List<SelectListItem>();
+            foreach (var category in allCategories)
             {
                 SelectListItem categorySelectItem = new SelectListItem()
                 {
                     Text = category.CategoryName,
                     Value = category.CategoryId.ToString()
                 };
-                categoryList.Add(categorySelectItem);
+                categorySelectListItemList.Add(categorySelectItem);
             }
-            return categoryList;
+            return categorySelectListItemList;
+        }
+
+        private static List<SelectListItem> CreateSelectListItemList(List<Tag> allTags)
+        {
+            List<SelectListItem> tagSelectListItemList = new List<SelectListItem>();
+            foreach (var tag in allTags)
+            {
+                SelectListItem categorySelectItem = new SelectListItem()
+                {
+                    Text = tag.TagName,
+                    Value = tag.TagId.ToString()
+                };
+                tagSelectListItemList.Add(categorySelectItem);
+            }
+            return tagSelectListItemList;
         }
 
     }
