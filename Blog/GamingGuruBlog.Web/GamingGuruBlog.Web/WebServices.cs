@@ -16,10 +16,12 @@ namespace GamingGuruBlog.Web
 
 
 
-        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> relatedTags)
+        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> allTags)
         {
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
+            newBlogPostVM.Categories = allCategories;
+            newBlogPostVM.Tags = allTags;
             newBlogPostVM.CategoryList = CreateSelectListItemList(allCategories);
             newBlogPostVM.TagString = string.Join(" ", blogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
 
