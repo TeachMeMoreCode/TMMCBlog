@@ -31,8 +31,9 @@ namespace GamingGuruBlog.Web
         public static BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
         {
             BlogPost returnedBlogPost = blogPostVM.BlogPost;
-            blogPostVM.
-            returnedBlogPost.
+            returnedBlogPost.AssignedCategories = CreateCategories(blogPostVM.ChosenCategoriesArray);
+            // to be continued
+
             int blogID = _blogServices.AddNewBlogPost(blogPostVM.BlogPost);
             foreach (var category in blogPostVM.ChosenCategoriesArray)
             {
@@ -51,7 +52,20 @@ namespace GamingGuruBlog.Web
 
         }
 
-        private static List<Category> CreateCategories()
+        private static List<Category> CreateCategories(string[] chosenCategories)
+        {
+            List<Category> returnedList = new List<Category>();
+            foreach (var category in chosenCategories)
+            {
+                Category assignedCategory = new Category
+                {
+                    CategoryId = int.Parse(category),
+                    CategoryName = "Needs to be associated with blog in BlogCategory table",
+                };
+                returnedList.Add(assignedCategory);
+            }
+            return returnedList;
+        }
 
         private static List<SelectListItem> CreateSelectListItemList(List<Category> allCategories)
         {
