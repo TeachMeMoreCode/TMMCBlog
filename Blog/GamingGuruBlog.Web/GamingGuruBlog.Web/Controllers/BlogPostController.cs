@@ -65,7 +65,7 @@ namespace GamingGuruBlog.Web.Controllers
             {
                 var blogId = _blogPostRepo.AddBlogPost(newBlogPost.BlogPost);
 
-                foreach (var category in newBlogPost.CategoryArray)
+                foreach (var category in newBlogPost.ChosenCategoriesArray)
                 {
                     _blogCategoryRepo.AddCategoryToBlog(blogId, int.Parse(category));
                 }
@@ -105,7 +105,7 @@ namespace GamingGuruBlog.Web.Controllers
                 var blogPostID = editedBlogPost.BlogPost.BlogPostId;
                 _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
 
-                foreach (var category in editedBlogPost.CategoryArray)
+                foreach (var category in editedBlogPost.ChosenCategoriesArray)
                 {
                     _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
                 }
@@ -153,8 +153,8 @@ namespace GamingGuruBlog.Web.Controllers
             BlogPostVM populatedBlogPost = new BlogPostVM();
             populatedBlogPost.BlogPost = _blogPostRepo.GetBlogPost(id);
             populatedBlogPost.BlogPost.BlogPostId = id;
-            populatedBlogPost.Categories = _categoryRepo.GetAllCategories();
-            populatedBlogPost.Tags = _tagRepo.GetAllTags();
+            populatedBlogPost.AllCategories = _categoryRepo.GetAllCategories();
+            // populatedBlogPost.Tags = _tagRepo.GetAllTags(); I don't think this is used in the UI. the AllBlogPostsVM is used in the partial view
             return populatedBlogPost;
         }
 
@@ -176,7 +176,7 @@ namespace GamingGuruBlog.Web.Controllers
                     Text = category.CategoryName,
                     Value = category.CategoryId.ToString()
                 };
-                returnedBlogPost.CategoryList.Add(categoryList);
+                returnedBlogPost.CategorySelectListItemList.Add(categoryList);
             }
 
             return returnedBlogPost;

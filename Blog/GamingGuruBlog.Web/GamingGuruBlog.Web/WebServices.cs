@@ -20,9 +20,9 @@ namespace GamingGuruBlog.Web
         {
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
-            newBlogPostVM.Categories = allCategories;
+            newBlogPostVM.AllCategories = allCategories;
             newBlogPostVM.Tags = allTags;
-            newBlogPostVM.CategoryList = CreateSelectListItemList(allCategories);
+            newBlogPostVM.CategorySelectListItemList = CreateSelectListItemList(allCategories);
             newBlogPostVM.TagString = string.Join(" ", blogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
 
             return newBlogPostVM;
@@ -30,8 +30,11 @@ namespace GamingGuruBlog.Web
 
         public static BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
         {
+            BlogPost returnedBlogPost = blogPostVM.BlogPost;
+            blogPostVM.
+            returnedBlogPost.
             int blogID = _blogServices.AddNewBlogPost(blogPostVM.BlogPost);
-            foreach (var category in blogPostVM.CategoryArray)
+            foreach (var category in blogPostVM.ChosenCategoriesArray)
             {
                 _blogServices.AddCategoryToBlogPost(blogID, int.Parse(category));
             }
@@ -48,10 +51,7 @@ namespace GamingGuruBlog.Web
 
         }
 
-        //public static BlogPost ConvertVMToBlogPost(BlogPostVM newBlogPost)
-        //{
-
-        //}
+        private static List<Category> CreateCategories()
 
         private static List<SelectListItem> CreateSelectListItemList(List<Category> allCategories)
         {
