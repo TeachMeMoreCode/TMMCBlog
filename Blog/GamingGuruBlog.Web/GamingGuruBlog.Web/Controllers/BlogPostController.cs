@@ -1,4 +1,5 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using GamingGuruBlog.Domain;
 using GamingGuruBlog.Web.Models;
 using GamingGuruBlog;
@@ -39,6 +40,8 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult GetBlogPost(int id)
         {
             //TODO: check id is valid
+            BlogPost existingPost = _blogServices.GetBlogPost(id);
+
             var model = GetSinglePostVM(id);
             return View(model);
         }
