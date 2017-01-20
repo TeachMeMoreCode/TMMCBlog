@@ -23,7 +23,7 @@ namespace GamingGuruBlog.Data.Repositories
             return allTags;
         }
 
-        public List<Tag> AddAllTags(string[] tagNames)
+        public List<Tag> AddAllTags(List<string> tagNames)
         {
             List<Tag> allTags = new List<Tag>();
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
@@ -43,9 +43,7 @@ namespace GamingGuruBlog.Data.Repositories
                     else
                     {
                         allTags.Add(tag);
-                    }
-
-                    
+                    }          
                 }
 
             }

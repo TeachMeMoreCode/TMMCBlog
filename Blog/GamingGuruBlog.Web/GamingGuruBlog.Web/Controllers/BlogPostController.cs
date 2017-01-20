@@ -41,8 +41,11 @@ namespace GamingGuruBlog.Web.Controllers
         {
             //TODO: check id is valid
             BlogPost existingPost = _blogServices.GetBlogPost(id);
+            List<Category> allCategories = _blogServices.GetAllCategories();
+            List<Tag> allTags = _blogServices.GetAllTags();
+       
+            var model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories, allTags);
 
-            var model = GetSinglePostVM(id);
             return View(model);
         }
 
@@ -50,13 +53,14 @@ namespace GamingGuruBlog.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Post()
         {
-            //UIConverter helper = new UIConverter(_blogServices);
-            //BlogPostVM model = helper.CreateNewBlogPostVM(User.Identity.GetUserId());
-            //return View(model);
+            BlogPost newPost = new BlogPost();
+            newPost.DateCreatedUTC = DateTime.UtcNow;
+            newPost.UserId = User.Identity.GetUserId();
+            List<Category> allCategories = _blogServices.GetAllCategories();
+            List<Tag> allTags = _blogServices.GetAllTags();
 
-            var model = PopulatedCategorySelectListItem();
-            model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
-            model.BlogPost.UserId = User.Identity.GetUserId();
+            var model = WebServices.ConvertBlogPostToVeiwModel(newPost, allCategories, allTags);
+
             return View(model);
         }
 
@@ -66,20 +70,30 @@ namespace GamingGuruBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var blogId = _blogPostRepo.AddBlogPost(newBlogPost.BlogPost);
+                BlogPost newPost = WebServices.ConvertBlogPostVMToBlogPost(newBlogPost);
+                int blogId = _blogServices.AddNewBlogPost(newPost);
 
-                foreach (var category in newBlogPost.ChosenCategoriesArray)
-                {
-                    _blogCategoryRepo.AddCategoryToBlog(blogId, int.Parse(category));
-                }
+                _blogServices.AddCategoriesToBlogPost(blogId, newPost.AssignedCategories);
 
-                string[] postTags = newBlogPost.Tag.TagName.ToLower().Split(' ');
-                newBlogPost.Tags = _tagRepo.AddAllTags(postTags);
+                List<Tag> newTags = _blogServices.AddCreatedTags(newPost.AssignedTags);
 
-                foreach (var tag in newBlogPost.Tags)
-                {
-                    _blogTagRepo.AddTagToBlog(blogId, tag.TagId);
-                }
+                _blogServices.AddTagsToBlog(blogId, newTags);
+
+                    
+                    //_blogPostRepo.AddBlogPost(newBlogPost.BlogPost);
+
+                //foreach (var category in newBlogPost.ChosenCategoriesArray)
+                //{
+                //    _blogCategoryRepo.AddCategoryToBlog(blogId, int.Parse(category));
+                //}
+
+                //string[] postTags = newBlogPost.Tag.TagName.ToLower().Split(' ');
+                //newBlogPost.Tags = _tagRepo.AddAllTags(postTags);
+
+                //foreach (var tag in newBlogPost.Tags)
+                //{
+                //    _blogTagRepo.AddTagToBlog(blogId, tag.TagId);
+                //}
 
                 return RedirectToAction("Index", "Home");
             }

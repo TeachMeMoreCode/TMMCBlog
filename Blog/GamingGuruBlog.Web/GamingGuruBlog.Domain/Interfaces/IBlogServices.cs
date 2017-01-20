@@ -5,13 +5,13 @@ namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IBlogServices
     {
-        BlogPost CreateNewBlogPost(string newPost);
         List<Category> GetAllCategories();
         int AddNewBlogPost(BlogPost newPost);
         List<Category> GetAssignedCategories(int blogID);
-        void AddCategoryToBlogPost(int blogPostID, int category);
-        List<Tag> AddAllTags(string[] tagNames);
-        void AddTagToBlog(int blogID, int tagID);
+        void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs);
+        List<Tag> AddCreatedTags(List<Tag> tagNames);
+        void AddTagsToBlog(int blogID, List<Tag> tagID);
         BlogPost GetBlogPost(int blogID);
+        List<Tag> GetAllTags();
     }
 }

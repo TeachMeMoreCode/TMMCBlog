@@ -12,9 +12,6 @@ namespace GamingGuruBlog.Web
 {
     public static class WebServices
     {
-        private static IBlogServices _blogServices; // how the hell does this work for a static class?!
-
-
 
         public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> allTags)
         {
@@ -31,26 +28,9 @@ namespace GamingGuruBlog.Web
         public static BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
         {
             BlogPost returnedBlogPost = blogPostVM.BlogPost;
-            returnedBlogPost.AssignedCategories = CreateCategories(blogPostVM.ChosenCategoriesArray);
-
-            // to be continued
-
-            int blogID = _blogServices.AddNewBlogPost(blogPostVM.BlogPost);
-            foreach (var category in blogPostVM.ChosenCategoriesArray)
-            {
-                _blogServices.AddCategoryToBlogPost(blogID, int.Parse(category));
-            }
-
-            string[] postTags = blogPostVM.Tag.TagName.ToLower().Split(' ');
-            blogPostVM.Tags = _blogServices.AddAllTags(postTags);
-
-            foreach (var tag in blogPostVM.Tags)
-            {
-                _blogServices.AddTagToBlog(blogID, tag.TagId);
-            }
-
-            return _blogServices.GetBlogPost(blogID);
-
+            returnedBlogPost.AssignedCategories = CreateCategoryList(blogPostVM.ChosenCategoriesArray);
+            returnedBlogPost.AssignedTags = CreateTagList(blogPostVM.Tag.TagName);
+            return returnedBlogPost;
         }
 
         private static List<Category> CreateCategoryList(string[] chosenCategories)
@@ -74,9 +54,14 @@ namespace GamingGuruBlog.Web
             string[] postTags = tagString.ToLower().Split(' ');
             foreach (var tag in postTags)
             {
-                Tag newTag
+                Tag newTag = new Tag
+                {
+                    TagName = tag,
+                    TagId = 0,
+                };
+                tagsToBeProcessed.Add(newTag);
             }
-
+            return tagsToBeProcessed;
         }
 
         private static List<SelectListItem> CreateSelectListItemList(List<Category> allCategories)

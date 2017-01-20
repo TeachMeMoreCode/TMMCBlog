@@ -2,6 +2,7 @@
 using GamingGuruBlog.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GamingGuruBlog.Domain
 {
@@ -26,23 +27,10 @@ namespace GamingGuruBlog.Domain
 
         }
 
-        public BlogPost CreateNewBlogPost(String userID)
-        {
-            BlogPost newBlogPost = new BlogPost();
-            newBlogPost.DateCreatedUTC = DateTime.UtcNow;
-            newBlogPost.UserId = userID;
-            return newBlogPost;
-
-        }
-
+        #region BlogPost
         public BlogPost GetBlogPost(int blogID)
         {
             return _blogPostRepo.GetBlogPost(blogID);
-        }
-
-        public List<Category> GetAllCategories()
-        {
-            return _categoryRepo.GetAllCategories();
         }
 
         public int AddNewBlogPost(BlogPost newPost)
@@ -56,19 +44,50 @@ namespace GamingGuruBlog.Domain
             return _categoryRepo.GetAssignedcategories(blogID);
         }
 
-        public void AddCategoryToBlogPost(int blogPostID, int category)
+        public void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs)
         {
-            _blogCategoryRepo.AddCategoryToBlog(blogPostID, category);
+            foreach (var catID in categoryIDs)
+            {
+                _blogCategoryRepo.AddCategoryToBlog(blogPostID, catID.CategoryId);
+            }
         }
 
-        public List<Tag> AddAllTags(string[] tagNames)
+        public void AddTagsToBlog(int blogID, List<Tag> tagIDs)
         {
-            return _tagRepo.AddAllTags(tagNames);
+            foreach (var tag in tagIDs)
+            {
+                _blogTagRepo.AddTagToBlog(blogID, tag.TagId);
+
+            }
         }
 
-        public void AddTagToBlog(int blogID, int tagID)
+        #endregion
+
+        #region Tags
+        public List<Tag> GetAllTags()
         {
-            _blogTagRepo.AddTagToBlog(blogID, tagID);
+            return _tagRepo.GetAllTags();
         }
+
+        public List<Tag> AddCreatedTags(List<Tag> tagNames)
+        {
+            List<string> justTagNames = new List<string>();
+
+            foreach (var tag in tagNames)
+            {
+                justTagNames.Add(tag.TagName);
+            }
+            return _tagRepo.AddAllTags(justTagNames);
+        }
+        #endregion
+
+        #region Categories
+        public List<Category> GetAllCategories()
+        {
+            return _categoryRepo.GetAllCategories();
+        }
+
+        #endregion 
+
     }
 }
