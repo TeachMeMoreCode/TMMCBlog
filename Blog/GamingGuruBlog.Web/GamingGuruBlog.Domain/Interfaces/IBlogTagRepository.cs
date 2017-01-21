@@ -8,7 +8,7 @@ namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IBlogTagRepository
     {
-        void AddTagToBlog(int blogPostId, int category);
+        void AddTagToBlog(int blogPostId, int tag);
         void DeleteTagFromBlog(int blogPostId);
     }
 }

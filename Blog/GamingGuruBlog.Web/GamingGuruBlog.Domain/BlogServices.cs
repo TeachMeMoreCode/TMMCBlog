@@ -61,6 +61,32 @@ namespace GamingGuruBlog.Domain
             }
         }
 
+        public void ProcessEditedBlogPost(BlogPost editedBlogPost)
+        {
+            _blogPostRepo.EditBlogPost(editedBlogPost);
+            int blogPostID = editedBlogPost.BlogPostId;
+
+            // remove all existing Categories from blog post
+            _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+
+            // add selected categories to this blog post
+            foreach (var category in editedBlogPost.AssignedCategories)
+            {
+                _blogCategoryRepo.AddCategoryToBlog(blogPostID, category.CategoryId);
+            }
+
+            // add newly created tags to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
+            editedBlogPost.AssignedTags = _tagRepo.AddAllTags(editedBlogPost.AssignedTags);
+            // remove all assigned tags to this blogPost
+            _blogTagRepo.DeleteTagFromBlog(blogPostID);
+            // assign newly created Tags to this blog post
+            foreach (var tag in editedBlogPost.AssignedTags)
+            {
+                _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
+            }
+
+        }
+
         #endregion
 
         #region Tags

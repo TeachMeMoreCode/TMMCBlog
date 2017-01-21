@@ -23,7 +23,7 @@ namespace GamingGuruBlog.Data.Repositories
             return allTags;
         }
 
-        public List<Tag> AddAllTags(List<string> tagNames)
+        public List<Tag> AddAllTags(List<Tag> tagNames)
         {
             List<Tag> allTags = new List<Tag>();
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
@@ -31,14 +31,15 @@ namespace GamingGuruBlog.Data.Repositories
                 foreach (var item in tagNames)
                 {
                     var parameters = new DynamicParameters();
-                    parameters.Add("TagName", item);
+                    parameters.Add("TagName", item.TagName);
 
                     Tag tag = connection.Query<Tag>("SELECT * FROM Tag where TagName = @TagName",parameters).SingleOrDefault();
 
+                    // if the tag already exist, don't added it, instead get it and add it to the returned list
                     if (tag == null)
                     {
-                        AddTag(item);
-                        allTags.Add(SelectSingleTag(item));
+                        AddTag(item.TagName);
+                        allTags.Add(SelectSingleTag(item.TagName));
                     }
                     else
                     {

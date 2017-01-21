@@ -28,12 +28,12 @@ namespace GamingGuruBlog.Web
         public static BlogPost ConvertBlogPostVMToBlogPost(BlogPostVM blogPostVM)
         {
             BlogPost returnedBlogPost = blogPostVM.BlogPost;
-            returnedBlogPost.AssignedCategories = CreateCategoryList(blogPostVM.ChosenCategoriesArray);
+            returnedBlogPost.AssignedCategories = CreateListOfCategory(blogPostVM.ChosenCategoriesArray);
             returnedBlogPost.AssignedTags = CreateTagList(blogPostVM.Tag.TagName);
             return returnedBlogPost;
         }
 
-        private static List<Category> CreateCategoryList(string[] chosenCategories)
+        private static List<Category> CreateListOfCategory(string[] chosenCategories)
         {
             List<Category> categoriesToBeProcessed = new List<Category>();
             foreach (var category in chosenCategories)

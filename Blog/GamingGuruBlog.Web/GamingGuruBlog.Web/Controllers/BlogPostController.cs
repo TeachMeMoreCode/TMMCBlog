@@ -104,40 +104,49 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult Edit(int id)
         {
 
-            var model = PopulatedCategorySelectListItem();
-            model.BlogPost = _blogPostRepo.GetBlogPost(id);
-            model.TagString = string.Join(" ", model.BlogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
-            model.BlogPost.EditDate = DateTime.UtcNow;
+            BlogPost existingPost = _blogServices.GetBlogPost(id);
+            List<Category> allCategories = _blogServices.GetAllCategories();
+            List<Tag> allTags = _blogServices.GetAllTags();
+
+            BlogPostVM model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories, allTags);
+
+            //var model = PopulatedCategorySelectListItem();
+            //model.BlogPost = _blogPostRepo.GetBlogPost(id);
+            //model.TagString = string.Join(" ", model.BlogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
+            //model.BlogPost.EditDate = DateTime.UtcNow;
 
             return View(model);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Edit(BlogPostVM editedBlogPost)
+        public ActionResult Edit(BlogPostVM editedBlogPostVM)
         {
             if (ModelState.IsValid)
             {
-                _blogPostRepo.EditBlogPost(editedBlogPost.BlogPost);
-                var blogPostID = editedBlogPost.BlogPost.BlogPostId;
+                BlogPost postToBeProcessed = WebServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
+                _blogServices.ToString // to be continued
+
+                _blogPostRepo.EditBlogPost(editedBlogPostVM.BlogPost);
+                var blogPostID = editedBlogPostVM.BlogPost.BlogPostId;
                 _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
 
-                foreach (var category in editedBlogPost.ChosenCategoriesArray)
+                foreach (var category in editedBlogPostVM.ChosenCategoriesArray)
                 {
                     _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
                 }
 
-                string[] postTags = editedBlogPost.Tag.TagName.ToLower().Split(' ');
-                editedBlogPost.Tags = _tagRepo.AddAllTags(postTags);
+                string[] postTags = editedBlogPostVM.Tag.TagName.ToLower().Split(' ');
+                editedBlogPostVM.Tags = _tagRepo.AddAllTags(postTags);
                 _blogTagRepo.DeleteTagFromBlog(blogPostID);
-                foreach (var tag in editedBlogPost.Tags)
+                foreach (var tag in editedBlogPostVM.Tags)
                 {
                     _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
                 }
 
                 return RedirectToAction("Index", "Home");
             }
-            return View(editedBlogPost);
+            return View(editedBlogPostVM);
 
         }
 
