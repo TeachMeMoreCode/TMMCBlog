@@ -242,6 +242,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\app\CyborgTheme.css" />
@@ -533,6 +534,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GamingGuruBlog.Data\GamingGuruBlog.Data.csproj">
+      <Project>{757fec43-fb0d-4046-ae61-d3526975e8bc}</Project>
+      <Name>GamingGuruBlog.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GamingGuruBlog.Domain\GamingGuruBlog.Domain.csproj">
       <Project>{886d3c0c-5a80-47e1-87d3-77841d5197b4}</Project>
       <Name>GamingGuruBlog.Domain</Name>

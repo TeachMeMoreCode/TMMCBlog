@@ -9,6 +9,53 @@ namespace GamingGuruBlog.Data.Repositories
 {
     public class BlogPostRepository : IBlogPostRepository
     {
+        public BlogPost GetBlogPost(int id)
+        {
+            //TODO: try-catch
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@BlogPostID", id);
+                var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).First();
+                string userId = blogPost.UserId;
+                parameter.Add("@UserID", userId);
+                blogPost.Author = GetAuthor(userId, connection);
+                blogPost.AssignedCategories = GetAssignedCategories(id, connection);
+                blogPost.AssignedTags = GetAssignedTags(id, connection);
+
+                return blogPost;
+            }
+        }
+
+        public void EditBlogPost(BlogPost blogPost)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+
+                var parameters = new DynamicParameters();
+                parameters.Add("Title", blogPost.Title);
+                parameters.Add("Body", blogPost.Body);
+                parameters.Add("Summary", blogPost.Summary);
+                parameters.Add("BlogId", blogPost.BlogPostId);
+                parameters.Add("EditDate", blogPost.EditDate);
+
+                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate WHERE BlogPostId = @BlogId", parameters);
+
+            }
+        }
+
+        public void DeleteBlogPost(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@BlogPostId", id);
+                connection.Execute("Delete from BlogCategory where BlogPostId = @BlogPostId", parameters);
+                connection.Execute("Delete from BlogTag where BlogPostId = @BlogPostId", parameters);
+                connection.Execute("Delete from BlogPost where BlogPostId = @BlogPostId", parameters);
+            }
+        }
+
         public int AddBlogPost(BlogPost newBlogPost)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
@@ -30,35 +77,6 @@ namespace GamingGuruBlog.Data.Repositories
                 }
 
             };
-        }
-
-        public void DeleteBlogPost(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@BlogPostId", id);
-                connection.Execute("Delete from BlogCategory where BlogPostId = @BlogPostId", parameters);
-                connection.Execute("Delete from BlogTag where BlogPostId = @BlogPostId", parameters);
-                connection.Execute("Delete from BlogPost where BlogPostId = @BlogPostId", parameters);
-            }
-        }
-
-        public void EditBlogPost(BlogPost blogPost)
-        {
-            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
-            {
-
-                var parameters = new DynamicParameters();
-                parameters.Add("Title", blogPost.Title);
-                parameters.Add("Body", blogPost.Body);
-                parameters.Add("Summary", blogPost.Summary);
-                parameters.Add("BlogId", blogPost.BlogPostId);
-                parameters.Add("EditDate", blogPost.EditDate);
-
-                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate WHERE BlogPostId = @BlogId", parameters);
-
-            }
         }
 
         public List<BlogPost> GetAllBlogPostsWithCategoriesAndTags()
@@ -100,25 +118,6 @@ namespace GamingGuruBlog.Data.Repositories
             var parameter = new DynamicParameters();
             parameter.Add("@UserID", userId);
             return connection.Query<User>("SELECT * FROM BlogPost AS bp JOIN AspNetUsers AS au ON bp.UserID = au.Id WHERE bp.UserID = @UserID", parameter).FirstOrDefault();
-        }
-
-
-        public BlogPost GetBlogPost(int id)
-        {
-            //TODO: try-catch
-            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
-            {
-                var parameter = new DynamicParameters();
-                parameter.Add("@BlogPostID", id);
-                var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).First();
-                string userId = blogPost.UserId;
-                parameter.Add("@UserID", userId);
-                blogPost.Author = GetAuthor(userId, connection);
-                blogPost.AssignedCategories = GetAssignedCategories(id, connection);
-                blogPost.AssignedTags = GetAssignedTags(id, connection);
-
-                return blogPost;
-            }
         }
 
         public List<BlogPost> GetAllPostsByCategory(int id)
