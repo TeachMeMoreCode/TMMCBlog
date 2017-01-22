@@ -20,7 +20,14 @@ namespace GamingGuruBlog.Web
             newBlogPostVM.AllCategories = allCategories;
             newBlogPostVM.Tags = allTags;
             newBlogPostVM.CategorySelectListItemList = CreateSelectListItemList(allCategories);
-            newBlogPostVM.TagString = string.Join(" ", blogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
+            if (newBlogPostVM.BlogPost.BlogPostId > 0)
+            {
+                newBlogPostVM.TagString = string.Join(" ", blogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
+            }
+            else
+            {
+                newBlogPostVM.TagString = string.Empty;
+            }
 
             return newBlogPostVM;
         }

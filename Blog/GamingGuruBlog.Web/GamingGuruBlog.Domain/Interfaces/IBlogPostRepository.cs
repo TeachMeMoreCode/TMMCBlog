@@ -9,7 +9,6 @@ namespace GamingGuruBlog.Domain.Interfaces
         void EditBlogPost(BlogPost blogPost);
         void DeleteBlogPost(int id);
         int AddBlogPost(BlogPost newBlogPost);
-        void ProcessEditedBlogPost(BlogPost editedBlogPost)
         List<BlogPost> GetAllBlogPostsWithCategoriesAndTags();
         List<BlogPost> GetAllPostsByCategory(int id);
         List<BlogPost> GetAllBlogPostsByTag(int id);

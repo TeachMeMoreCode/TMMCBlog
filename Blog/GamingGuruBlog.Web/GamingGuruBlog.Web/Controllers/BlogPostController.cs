@@ -125,24 +125,24 @@ namespace GamingGuruBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 BlogPost postToBeProcessed = WebServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
-                _blogServices.ToString // to be continued
+                _blogServices.ProcessEditedBlogPost(postToBeProcessed);// to be continued
 
-                _blogPostRepo.EditBlogPost(editedBlogPostVM.BlogPost);
-                var blogPostID = editedBlogPostVM.BlogPost.BlogPostId;
-                _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+                //_blogPostRepo.EditBlogPost(editedBlogPostVM.BlogPost);
+                //var blogPostID = editedBlogPostVM.BlogPost.BlogPostId;
+                //_blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
 
-                foreach (var category in editedBlogPostVM.ChosenCategoriesArray)
-                {
-                    _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
-                }
+                //foreach (var category in editedBlogPostVM.ChosenCategoriesArray)
+                //{
+                //    _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
+                //}
 
-                string[] postTags = editedBlogPostVM.Tag.TagName.ToLower().Split(' ');
-                editedBlogPostVM.Tags = _tagRepo.AddAllTags(postTags);
-                _blogTagRepo.DeleteTagFromBlog(blogPostID);
-                foreach (var tag in editedBlogPostVM.Tags)
-                {
-                    _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
-                }
+                //string[] postTags = editedBlogPostVM.Tag.TagName.ToLower().Split(' ');
+                //editedBlogPostVM.Tags = _tagRepo.AddAllTags(postTags);
+                //_blogTagRepo.DeleteTagFromBlog(blogPostID);
+                //foreach (var tag in editedBlogPostVM.Tags)
+                //{
+                //    _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
+                //}
 
                 return RedirectToAction("Index", "Home");
             }

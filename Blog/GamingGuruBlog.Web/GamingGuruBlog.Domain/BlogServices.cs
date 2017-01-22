@@ -75,8 +75,13 @@ namespace GamingGuruBlog.Domain
                 _blogCategoryRepo.AddCategoryToBlog(blogPostID, category.CategoryId);
             }
 
-            // add newly created tags to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
-            editedBlogPost.AssignedTags = _tagRepo.AddAllTags(editedBlogPost.AssignedTags);
+            List<string> justTagNames = new List<string>();
+            foreach (var tag in editedBlogPost.AssignedTags)
+            {
+                justTagNames.Add(tag.TagName);
+            }
+            // add newly created tag names to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
+            editedBlogPost.AssignedTags = _tagRepo.AddAllTags(justTagNames);
             // remove all assigned tags to this blogPost
             _blogTagRepo.DeleteTagFromBlog(blogPostID);
             // assign newly created Tags to this blog post

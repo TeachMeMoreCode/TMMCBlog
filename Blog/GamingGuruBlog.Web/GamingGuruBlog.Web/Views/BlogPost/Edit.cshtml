@@ -17,8 +17,8 @@
             @Html.HiddenFor(m => m.BlogPost.UserId)
             @Html.HiddenFor(m => m.BlogPost.EditDate)
             <div class="form-group">
-                @Html.LabelFor(model => model.Categories, new { style = "font-size:24px" })
-                @Html.ListBoxFor(model => model.CategoryArray, new MultiSelectList(Model.CategoryList, "Value", "Text", Model.BlogPost.AssignedCategories.Select(category=> category.CategoryId).ToArray()), new { @class = "form-control"})
+                @Html.LabelFor(model => model.AllCategories, new { style = "font-size:24px" })
+                @Html.ListBoxFor(model => model.ChosenCategoriesArray, new MultiSelectList(Model.CategorySelectListItemList, "Value", "Text", Model.BlogPost.AssignedCategories.Select(category=> category.CategoryId).ToArray()), new { @class = "form-control"})
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.BlogPost.Title, new { style = "font-size:24px" })
