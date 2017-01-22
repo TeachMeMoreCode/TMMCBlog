@@ -120,12 +120,12 @@ namespace GamingGuruBlog.Data.Repositories
             return connection.Query<User>("SELECT * FROM BlogPost AS bp JOIN AspNetUsers AS au ON bp.UserID = au.Id WHERE bp.UserID = @UserID", parameter).FirstOrDefault();
         }
 
-        public List<BlogPost> GetAllPostsByCategory(int id)
+        public List<BlogPost> GetAllPostsByCategory(int categoryID)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@CategoryID", id);
+                parameter.Add("@CategoryID", categoryID);
 
                 List<BlogPost> allPostsByCategory = connection.Query<BlogPost>("SELECT * FROM BlogPost as BP JOIN BlogCategory as BC ON BC.BlogPostID = BP.BlogPostID WHERE BC.CategoryID = @CategoryID ORDER BY DateCreatedUTC DESC", parameter).ToList();
 

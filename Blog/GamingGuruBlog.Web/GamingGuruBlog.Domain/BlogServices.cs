@@ -33,6 +33,11 @@ namespace GamingGuruBlog.Domain
             return _blogPostRepo.GetBlogPost(blogID);
         }
 
+        public List<BlogPost> GetBlogPostByCategoryID(int categoryID)
+        {
+            return _blogPostRepo.GetAllPostsByCategory(categoryID);
+        }
+
         public int AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
@@ -63,6 +68,7 @@ namespace GamingGuruBlog.Domain
 
         public void ProcessEditedBlogPost(BlogPost editedBlogPost)
         {
+            editedBlogPost.EditDate = DateTime.Now;
             _blogPostRepo.EditBlogPost(editedBlogPost);
             int blogPostID = editedBlogPost.BlogPostId;
 

@@ -95,7 +95,7 @@ namespace GamingGuruBlog.Web.Controllers
                 //    _blogTagRepo.AddTagToBlog(blogId, tag.TagId);
                 //}
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AdminPanel", "Admin");
             }
             return View(PopulatedCategorySelectListItem(newBlogPost));
         }
@@ -107,13 +107,7 @@ namespace GamingGuruBlog.Web.Controllers
             BlogPost existingPost = _blogServices.GetBlogPost(id);
             List<Category> allCategories = _blogServices.GetAllCategories();
             List<Tag> allTags = _blogServices.GetAllTags();
-
             BlogPostVM model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories, allTags);
-
-            //var model = PopulatedCategorySelectListItem();
-            //model.BlogPost = _blogPostRepo.GetBlogPost(id);
-            //model.TagString = string.Join(" ", model.BlogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
-            //model.BlogPost.EditDate = DateTime.UtcNow;
 
             return View(model);
         }
@@ -125,26 +119,9 @@ namespace GamingGuruBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 BlogPost postToBeProcessed = WebServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
-                _blogServices.ProcessEditedBlogPost(postToBeProcessed);// to be continued
+                _blogServices.ProcessEditedBlogPost(postToBeProcessed);
 
-                //_blogPostRepo.EditBlogPost(editedBlogPostVM.BlogPost);
-                //var blogPostID = editedBlogPostVM.BlogPost.BlogPostId;
-                //_blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
-
-                //foreach (var category in editedBlogPostVM.ChosenCategoriesArray)
-                //{
-                //    _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
-                //}
-
-                //string[] postTags = editedBlogPostVM.Tag.TagName.ToLower().Split(' ');
-                //editedBlogPostVM.Tags = _tagRepo.AddAllTags(postTags);
-                //_blogTagRepo.DeleteTagFromBlog(blogPostID);
-                //foreach (var tag in editedBlogPostVM.Tags)
-                //{
-                //    _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
-                //}
-
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AdminPanel", "Admin");
             }
             return View(editedBlogPostVM);
 
@@ -152,7 +129,7 @@ namespace GamingGuruBlog.Web.Controllers
 
         public ActionResult BlogPostsByCategory(int id, int? page)
         {
-            var model = _blogPostRepo.GetAllPostsByCategory(id);
+            var model = _blogServices.GetBlogPostByCategoryID(id);
             return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 
