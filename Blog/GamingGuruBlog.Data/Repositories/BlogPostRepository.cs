@@ -142,12 +142,12 @@ namespace GamingGuruBlog.Data.Repositories
             }
         }
 
-        public List<BlogPost> GetAllBlogPostsByTag(int id)
+        public List<BlogPost> GetAllBlogPostsByTag(int tagID)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@TagID", id);
+                parameter.Add("@TagID", tagID);
 
                 List<BlogPost> allPostsByTag = connection.Query<BlogPost>("SELECT * FROM BlogPost AS bp JOIN BlogTag AS bt on bp.BlogPostID = bt.BlogPostID WHERE bt.TagID = @TagID ORDER BY DateCreatedUTC DESC", parameter).ToList();
 

@@ -33,6 +33,16 @@ namespace GamingGuruBlog.Domain
             return _blogPostRepo.GetBlogPost(blogID);
         }
 
+        public List<BlogPost> AllBlogPostsByTag(int tagID)
+        {
+            return _blogPostRepo.GetAllBlogPostsByTag(tagID);
+        }
+
+        public void DeleteBlogPost(int blogID)
+        {
+            _blogPostRepo.DeleteBlogPost(blogID);
+        }
+
         public List<BlogPost> GetBlogPostByCategoryID(int categoryID)
         {
             return _blogPostRepo.GetAllPostsByCategory(categoryID);

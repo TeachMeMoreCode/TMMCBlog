@@ -13,7 +13,7 @@ namespace GamingGuruBlog.Web
     public static class WebServices
     {
 
-        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories, List<Tag> allTags)
+        public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories)
         {
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
