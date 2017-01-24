@@ -139,7 +139,18 @@ namespace GamingGuruBlog.Domain
             return _categoryRepo.GetAllCategories();
         }
 
-        #endregion 
+        #endregion
 
+        #region User
+        public User GetUser(string userID)
+        {
+            return _userRepo.GetUser(userID);
+        }
+
+        public void EditUser(User editedUser)
+        {
+            _userRepo.EditUser(editedUser);
+        }
+        #endregion
     }
 }
