@@ -19,6 +19,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         void DeleteBlogPost(int blogID);
         List<BlogPost> GetAllBlogPosts();
         User GetUser(string userID);
-        void EditUser(User editedUser)
+        void EditUser(User editedUser);
+        List<User> GetAllUsers();
     }
 }

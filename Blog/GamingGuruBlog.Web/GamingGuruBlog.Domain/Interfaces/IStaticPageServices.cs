@@ -13,5 +13,6 @@ namespace GamingGuruBlog.Domain.Interfaces
         StaticPage GetStaticPage(int staticPageID);
         void EditStaticPage(StaticPage updatedStaticPage);
         void DeleteStaticPage(int staticPageID);
+        List<StaticPage> GetAllStaticPages();
     }
 }

@@ -151,6 +151,11 @@ namespace GamingGuruBlog.Domain
         {
             _userRepo.EditUser(editedUser);
         }
+
+        public List<User> GetAllUsers()
+        {
+            return _userRepo.GetAllUsers();
+        }
         #endregion
     }
 }

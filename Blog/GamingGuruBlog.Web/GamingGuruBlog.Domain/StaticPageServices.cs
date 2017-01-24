@@ -37,5 +37,10 @@ namespace GamingGuruBlog.Domain
             _staticPagerepo.DeleteStaticPage(staticPageID);
         }
 
+        public List<StaticPage> GetAllStaticPages()
+        {
+            return _staticPagerepo.GetAllStaticPages();
+        }
+
     }
 }

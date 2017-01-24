@@ -8,54 +8,35 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class PartialViewController : Controller
     {
-
-        private IBlogPostRepository _blogPostRepo { get; set; }
-        private IBlogCategoryRepository _blogCategoryRepo { get; set; }
-        private IBlogTagRepository _blogTagRepo { get; set; }
-        private ICategoryRepository _categoryRepo { get; set; }
-        private ITagRepository _tagRepo { get; set; }
-        private IUserRepository _userRepo { get; set; }
-        private IStaticPageRepository _staticPageRepo { get; set; }
+        private IBlogServices _blogServices;
+        private IStaticPageServices _staticPageServices;
 
 
-        public PartialViewController(IBlogPostRepository blogPostRepo, IUserRepository userRepo, IStaticPageRepository staticPageRepo, IBlogCategoryRepository blogCategoryRepo, IBlogTagRepository blogTagRepo, ICategoryRepository categoryRepo, ITagRepository tagRepo)
+        public PartialViewController( IStaticPageServices newStaticPageServices, IBlogServices newBlogservices)
         {
-            _blogPostRepo = blogPostRepo;
-            _blogCategoryRepo = blogCategoryRepo;
-            _blogTagRepo = blogTagRepo;
-            _categoryRepo = categoryRepo;
-            _tagRepo = tagRepo;
-            _userRepo = userRepo;
-            _staticPageRepo = staticPageRepo;
+            _blogServices = newBlogservices;
+            _staticPageServices = newStaticPageServices;
         }
         // GET: PartialView
         public PartialViewResult Action()
         {
-            var model = _staticPageRepo.GetAllStaticPages();
+            var model = _staticPageServices.GetAllStaticPages();
             return PartialView("~/Views/Shared/_StaticPagePartial.cshtml", model);
         }
 
         public PartialViewResult FillWidgetWithData()
         {
             AllBlogPostsVM result = new AllBlogPostsVM();
-            result.AllBlogPosts = _blogPostRepo.GetAllBlogPostsWithCategoriesAndTags();
-            result.AllCategories = _categoryRepo.GetAllCategories();
-            result.AllTags = _tagRepo.GetAllTags();
-
+            result.AllBlogPosts = _blogServices.GetAllBlogPosts();
+            result.AllCategories = _blogServices.GetAllCategories();
+            result.AllTags = _blogServices.GetAllTags();
 
             return PartialView("~/Views/Shared/_BlogWidgetPartial.cshtml", result);
         }
 
-
-        public List<StaticPage> StaticPages()
-        {
-            var model = _staticPageRepo.GetAllStaticPages();
-            return model;
-        }
-
         public PartialViewResult AdminPanelTabbedUsers()
         {
-            var model = _userRepo.GetAllUsers();
+            var model = _blogServices.GetAllUsers();
             return PartialView("~/Views/PartialView/AdminPanelTabbedUsers.cshtml", model);
         }
 
