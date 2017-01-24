@@ -30,7 +30,6 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult EditUser(User editedUser)
         {
                 _blogServices.EditUser(editedUser);
-                _userRepo.EditUser(editedUser);
                 return RedirectToAction("Index", "Home");
         }
     }
