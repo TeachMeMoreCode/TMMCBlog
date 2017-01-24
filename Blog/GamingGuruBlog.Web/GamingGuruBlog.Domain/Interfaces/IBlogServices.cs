@@ -17,5 +17,6 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<BlogPost> GetBlogPostByCategoryID(int categoryID);
         List<BlogPost> AllBlogPostsByTag(int tagID);
         void DeleteBlogPost(int blogID);
+        List<BlogPost> GetAllBlogPosts();
     }
 }
