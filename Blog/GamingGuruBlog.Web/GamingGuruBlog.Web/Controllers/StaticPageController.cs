@@ -17,6 +17,8 @@ namespace GamingGuruBlog.Web.Controllers
         private IUserRepository _userRepo { get; set; }
         private IStaticPageRepository _staticPageRepo { get; set; }
 
+        private IBlogServices _blogServices;
+
 
         public StaticPageController(IStaticPageRepository staticPageRepo)
         {
