@@ -18,7 +18,6 @@ namespace GamingGuruBlog.Web
             BlogPostVM newBlogPostVM = new BlogPostVM();
             newBlogPostVM.BlogPost = blogPost;
             newBlogPostVM.AllCategories = allCategories;
-            newBlogPostVM.Tags = allTags;
             newBlogPostVM.CategorySelectListItemList = CreateSelectListItemList(allCategories);
             if (newBlogPostVM.BlogPost.BlogPostId > 0)
             {
