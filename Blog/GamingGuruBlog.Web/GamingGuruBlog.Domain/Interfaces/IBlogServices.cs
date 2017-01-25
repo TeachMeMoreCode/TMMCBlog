@@ -21,5 +21,9 @@ namespace GamingGuruBlog.Domain.Interfaces
         User GetUser(string userID);
         void EditUser(User editedUser);
         List<User> GetAllUsers();
+        void DeleteCategory(int categoryID);
+        void EditCategory(Category changedCategory);
+        Category GetCategory(int categoryID);
+        void AddCategory(Category newCategory);
     }
 }

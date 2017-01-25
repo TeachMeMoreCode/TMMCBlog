@@ -12,7 +12,7 @@ namespace GamingGuruBlog.Web.Controllers
         private IStaticPageServices _staticPageServices;
 
 
-        public PartialViewController( IStaticPageServices newStaticPageServices, IBlogServices newBlogservices)
+        public PartialViewController(IStaticPageServices newStaticPageServices, IBlogServices newBlogservices)
         {
             _blogServices = newBlogservices;
             _staticPageServices = newStaticPageServices;

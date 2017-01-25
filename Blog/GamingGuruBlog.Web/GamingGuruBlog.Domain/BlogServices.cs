@@ -134,6 +134,27 @@ namespace GamingGuruBlog.Domain
         #endregion
 
         #region Categories
+
+        public void AddCategory(Category newCategory)
+        {
+            _categoryRepo.AddCategory(newCategory);
+        }
+
+        public void DeleteCategory(int categoryID)
+        {
+            _categoryRepo.DeleteCategory(categoryID);
+        }
+
+        public void EditCategory(Category changedCategory)
+        {
+            _categoryRepo.EditCategory(changedCategory);
+        }
+
+        public Category GetCategory(int categoryID)
+        {
+            return _categoryRepo.GetCategory(categoryID);
+        }
+
         public List<Category> GetAllCategories()
         {
             return _categoryRepo.GetAllCategories();
