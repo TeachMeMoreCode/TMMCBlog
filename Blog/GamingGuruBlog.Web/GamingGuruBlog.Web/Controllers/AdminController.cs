@@ -6,26 +6,13 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class AdminController : Controller
     {
+        private IBlogServices _blogServices;
+        private IStaticPageServices _staticPageServices;
 
-        private IBlogPostRepository _blogPostRepo { get; set; }
-        private IBlogCategoryRepository _blogCategoryRepo { get; set; }
-        private IBlogTagRepository _blogTagRepo { get; set; }
-        private ICategoryRepository _categoryRepo { get; set; }
-        private ITagRepository _tagRepo { get; set; }
-        private IUserRepository _userRepo { get; set; }
-        private IStaticPageRepository _staticPageRepo { get; set; }
-
-
-
-        public AdminController(IBlogPostRepository blogPostRepo, IUserRepository userRepo, IStaticPageRepository staticPageRepo,IBlogCategoryRepository blogCategoryRepo, IBlogTagRepository blogTagRepo, ICategoryRepository categoryRepo, ITagRepository tagRepo)
+        public AdminController(IBlogServices newBlogServices, IStaticPageServices newStaticPageServices)
         {
-            _blogPostRepo = blogPostRepo;
-            _blogCategoryRepo = blogCategoryRepo;
-            _blogTagRepo = blogTagRepo;
-            _categoryRepo = categoryRepo;
-            _tagRepo = tagRepo;
-            _userRepo = userRepo;
-            _staticPageRepo = staticPageRepo;
+            _blogServices = newBlogServices;
+            _staticPageServices = newStaticPageServices;
         }
 
         // GET: Admin
@@ -33,10 +20,10 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult AdminPanel()
         {      
             AdminPanelVM model = new AdminPanelVM();
-            model.Users = _userRepo.GetAllUsers();
-            model.Categories = _categoryRepo.GetAllCategories();
-            model.StaticPages = _staticPageRepo.GetAllStaticPages();
-            model.BlogPosts = _blogPostRepo.GetAllBlogPostsWithCategoriesAndTags();
+            model.Users = _blogServices.GetAllUsers();
+            model.Categories = _blogServices.GetAllCategories();
+            model.StaticPages = _staticPageServices.GetAllStaticPages();
+            model.BlogPosts = _blogServices.GetAllBlogPosts();
 
             return View(model);
         }

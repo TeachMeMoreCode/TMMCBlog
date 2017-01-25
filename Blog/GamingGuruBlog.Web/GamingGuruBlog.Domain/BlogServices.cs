@@ -15,7 +15,6 @@ namespace GamingGuruBlog.Domain
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
 
-
         public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
         {
             _blogPostRepo = blogPostRepository;
