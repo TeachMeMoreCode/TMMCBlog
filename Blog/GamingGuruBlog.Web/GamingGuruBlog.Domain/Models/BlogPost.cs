@@ -39,6 +39,8 @@ namespace GamingGuruBlog.Domain.Models
         public List<Category> AssignedCategories { get; set; }
 
         public List<Tag> AssignedTags { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 
     
