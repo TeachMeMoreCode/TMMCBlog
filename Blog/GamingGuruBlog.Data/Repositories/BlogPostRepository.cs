@@ -38,6 +38,7 @@ namespace GamingGuruBlog.Data.Repositories
                 parameters.Add("Summary", blogPost.Summary);
                 parameters.Add("BlogId", blogPost.BlogPostId);
                 parameters.Add("EditDate", blogPost.EditDate);
+                parameters.Add("IsApproved", blogPost.IsApproved);
 
                 connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate WHERE BlogPostId = @BlogId", parameters);
 
