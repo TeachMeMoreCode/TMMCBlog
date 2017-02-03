@@ -18,7 +18,6 @@ namespace GamingGuruBlog.Data.Repositories
                 parameter.Add("@BlogPostID", id);
                 var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).First();
                 string userId = blogPost.UserId;
-                parameter.Add("@UserID", userId);
                 blogPost.Author = GetAuthor(userId, connection);
                 blogPost.AssignedCategories = GetAssignedCategories(id, connection);
                 blogPost.AssignedTags = GetAssignedTags(id, connection);
@@ -38,8 +37,9 @@ namespace GamingGuruBlog.Data.Repositories
                 parameters.Add("Summary", blogPost.Summary);
                 parameters.Add("BlogId", blogPost.BlogPostId);
                 parameters.Add("EditDate", blogPost.EditDate);
+                parameters.Add("IsApproved", blogPost.IsApproved);
 
-                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate WHERE BlogPostId = @BlogId", parameters);
+                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate, IsApproved = @IsApproved WHERE BlogPostId = @BlogId", parameters);
 
             }
         }
@@ -71,6 +71,7 @@ namespace GamingGuruBlog.Data.Repositories
                     myCommand.Parameters.AddWithValue("@Summary", newBlogPost.Summary);
                     myCommand.Parameters.AddWithValue("@UserId", newBlogPost.UserId);
                     myCommand.Parameters.AddWithValue("@DateCreatedUTC", newBlogPost.DateCreatedUTC);
+                    myCommand.Parameters.AddWithValue("@IsApproved", newBlogPost.IsApproved);
 
                     var newId = myCommand.ExecuteScalar();
                     return (int)newId;
