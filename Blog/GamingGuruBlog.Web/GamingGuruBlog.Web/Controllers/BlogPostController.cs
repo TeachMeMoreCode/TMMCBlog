@@ -40,7 +40,6 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult Post()
         {
             BlogPost newPost = new BlogPost();
-            newPost.DateCreatedUTC = DateTime.UtcNow;
             newPost.UserId = User.Identity.GetUserId();
             List<Category> allCategories = _blogServices.GetAllCategories();
 
