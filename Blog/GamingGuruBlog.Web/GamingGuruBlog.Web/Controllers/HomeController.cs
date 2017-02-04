@@ -20,6 +20,10 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult Index(int? page)
         {
             List<BlogPost> allBlogPosts = _blogServices.GetAllBlogPosts();
+            foreach (var post in allBlogPosts)
+            {
+                post.IsApproved = true;
+            }
             return (View(allBlogPosts.ToPagedList(pageNumber: page ?? 1, pageSize:5)));
         }
 

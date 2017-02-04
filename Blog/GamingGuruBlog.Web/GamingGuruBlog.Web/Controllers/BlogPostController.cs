@@ -55,6 +55,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                newBlogPost.BlogPost.DateCreatedUTC = DateTime.Now;
                 BlogPost newPost = WebServices.ConvertBlogPostVMToBlogPost(newBlogPost);
                 int blogId = _blogServices.AddNewBlogPost(newPost);
 
