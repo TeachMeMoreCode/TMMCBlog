@@ -129,6 +129,7 @@
                     <th></th>
                     <th>Post Title</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -142,6 +143,17 @@
                             </a>
                         </td>
                         <td><span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Go to Post"> @Html.ActionLink(post.Title, "GetBlogPost", "BlogPost", new { id = post.BlogPostId }, null)</span></td>
+                        <td>
+                            @if (post.IsApproved == true)
+                            {
+                                <p><span class="pull-right glyphicon glyphicon-thumbs-up" data-toggle="tooltip" data-placement="right" title="Approved"></span></p>
+                            }
+                            else
+                            {
+                                <p><span class="pull-right glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Pending"></span></p>
+                            }
+                        </td>
+
                         <td>
                             <form action="@Url.Action("DeleteBlog", "BlogPost", new { id = post.BlogPostId })" method="post" data-toggle="tooltip" data-placement="left" title="Delete Post" class="pull-right">
                                 <button class="close pull-right" onclick="return confirm('Are you sure you want to delete @post.Title');">X</button>

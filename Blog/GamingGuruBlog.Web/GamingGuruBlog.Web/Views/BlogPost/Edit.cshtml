@@ -43,8 +43,8 @@
                 @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", Value = Model.TagString})            
             </div>
             <div class="form-check">
-                <label class="form-check-label" style = "font-size:24px">
-                    @Html.CheckBoxFor(model => model.BlogPost.IsApproved, new { style = "width:20px; height:20px;", Value = Model.BlogPost.IsApproved })   Approved
+                <label class="form-check-label" style ="font-size:24px">
+                    @Html.EditorFor(model => model.BlogPost.IsApproved, new { style = "form-control width:20px; height:20px;", Value = Model.BlogPost.IsApproved })   Approved
                 </label>
             </div>
             <br/>
