@@ -12,6 +12,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<Tag> AddCreatedTags(List<Tag> tagNames);
         void AddTagsToBlog(int blogID, List<Tag> tagID);
         BlogPost GetBlogPost(int blogID);
+        BlogPost GetApprovedBlogPost(int id);
         List<Tag> GetAllTags();
         void ProcessEditedBlogPost(BlogPost editedBlogPost);
         List<BlogPost> GetBlogPostByCategoryID(int categoryID);

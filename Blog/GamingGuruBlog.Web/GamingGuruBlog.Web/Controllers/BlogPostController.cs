@@ -26,7 +26,7 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult GetBlogPost(int id)
         {
             //TODO: check id is valid
-            BlogPost existingPost = _blogServices.GetBlogPost(id);
+            BlogPost existingPost = _blogServices.GetApprovedBlogPost(id);
             List<Category> allCategories = _blogServices.GetAllCategories();
        
             var model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);

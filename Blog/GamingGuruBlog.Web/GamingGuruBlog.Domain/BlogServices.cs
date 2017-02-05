@@ -32,6 +32,11 @@ namespace GamingGuruBlog.Domain
             return _blogPostRepo.GetBlogPost(blogID);
         }
 
+        public BlogPost GetApprovedBlogPost(int id)
+        {
+            return _blogPostRepo.GetApprovedBlogPost(id);
+        }
+
         public List<BlogPost> GetAllBlogPosts()
         {
             return _blogPostRepo.GetAllBlogPostsWithCategoriesAndTags();
@@ -44,7 +49,7 @@ namespace GamingGuruBlog.Domain
 
         public List<BlogPost> AllBlogPostsByTag(int tagID)
         {
-            return _blogPostRepo.GetAllBlogPostsByTag(tagID);
+            return _blogPostRepo.GetpprovedBlogPostsByTag(tagID);
         }
 
         public void DeleteBlogPost(int blogID)
@@ -54,7 +59,7 @@ namespace GamingGuruBlog.Domain
 
         public List<BlogPost> GetBlogPostByCategoryID(int categoryID)
         {
-            return _blogPostRepo.GetAllPostsByCategory(categoryID);
+            return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
         }
 
         public int AddNewBlogPost(BlogPost newPost)
