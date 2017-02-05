@@ -12,15 +12,16 @@ namespace GamingGuruBlog.Data.Repositories
 {
     public class TagRepository : ITagRepository
     {
-        public List<Tag> GetAllTags()
+        public List<Tag> GetAssignedTags()
         {
-            List<Tag> allTags = new List<Tag>();
+            List<Tag> assignedTags = new List<Tag>();
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
-                allTags = connection.Query<Tag>("SELECT * FROM Tag").ToList();
+                // get only tags that are associated with a blog post
+                assignedTags = connection.Query<Tag>("SELECT Tag.TagID, Tag.TagName FROM BlogTag INNER JOIN Tag ON BlogTag.TagID = Tag.TagID").ToList();
             }
 
-            return allTags;
+            return assignedTags;
         }
 
         public List<Tag> AddAllTags(List<string> tagNames)
@@ -75,6 +76,36 @@ namespace GamingGuruBlog.Data.Repositories
                 Tag tag = connection.Query<Tag>("SELECT * FROM Tag where TagName = @TagName",parameters).SingleOrDefault();
 
                 return tag;
+            }
+        }
+
+        public List<Tag> GetAllTags()
+        {
+            List<Tag> assignedTags = new List<Tag>();
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                // get all tags whether they are associated with a blog post or not
+                assignedTags = connection.Query<Tag>("SELECT * FROM Tag").ToList();
+            }
+
+            return assignedTags;
+
+        }
+
+        public void PurgeUnusedTags()
+        {
+            List<Tag> allExistingTags = GetAllTags();
+            List<Tag> assignedTags = GetAssignedTags();
+            List<Tag> notUsedTags = allExistingTags.Except(assignedTags).ToList();
+            if (notUsedTags.Count > 0)
+            {
+                using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+                {
+                    foreach (var unusedTag in notUsedTags)
+                    {
+                        connection.Execute($"DELETE FROM Tag WHERE Tag.TagID = {unusedTag.TagId}");
+                    }
+                }
             }
         }
     }

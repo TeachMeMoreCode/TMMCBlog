@@ -28,7 +28,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             AllBlogPostsVM result = new AllBlogPostsVM();
             result.AllBlogPosts = _blogServices.GetAllBlogPosts();
-            result.AllCategories = _blogServices.GetAllCategories();
+            result.AllCategories = _blogServices.GetUsedCategories();
             result.AllTags = _blogServices.GetAllTags();
 
             return PartialView("~/Views/Shared/_BlogWidgetPartial.cshtml", result);

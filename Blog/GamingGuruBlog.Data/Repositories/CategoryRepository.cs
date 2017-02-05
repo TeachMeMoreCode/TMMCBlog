@@ -68,6 +68,19 @@ namespace GamingGuruBlog.Data.Repositories
             return allCategories;
         }
 
+        public List<Category> GetOnlyUsedCategories()
+        {
+            List<Category> allCategories = new List<Category>();
+            //TODO: probably need a try-catch
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                allCategories = connection.Query<Category>("SELECT Category.CategoryID, Category.CategoryName FROM BlogCategory INNER JOIN Category ON Blogcategory.CategoryID = Category.CategoryID").ToList();
+            }
+
+            return allCategories;
+
+        }
+
         public List<Category> GetAssignedcategories(int blogID)
         {
             if (blogID > 0)

@@ -6,6 +6,7 @@ namespace GamingGuruBlog.Domain.Interfaces
     public interface IBlogServices
     {
         List<Category> GetAllCategories();
+        List<Category> GetUsedCategories();
         int AddNewBlogPost(BlogPost newPost);
         List<Category> GetAssignedCategories(int blogID);
         void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs);

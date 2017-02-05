@@ -120,6 +120,9 @@ namespace GamingGuruBlog.Domain
                 _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
             }
 
+            // purge tags that are not used
+            _tagRepo.PurgeUnusedTags();
+
         }
 
         #endregion
@@ -127,7 +130,8 @@ namespace GamingGuruBlog.Domain
         #region Tags
         public List<Tag> GetAllTags()
         {
-            return _tagRepo.GetAllTags();
+
+            return _tagRepo.GetAssignedTags();
         }
 
         public List<Tag> AddCreatedTags(List<Tag> tagNames)
@@ -167,6 +171,11 @@ namespace GamingGuruBlog.Domain
         public List<Category> GetAllCategories()
         {
             return _categoryRepo.GetAllCategories();
+        }
+
+        public List<Category> GetUsedCategories()
+        {
+            return _categoryRepo.GetOnlyUsedCategories();
         }
 
         #endregion
