@@ -5,9 +5,11 @@ namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface ITagRepository
     {
+        List<Tag> GetAssignedTags();
         List<Tag> GetAllTags();
         List<Tag> AddAllTags(List<string> tagNames);
         void AddTag(string tagName);
         Tag SelectSingleTag(string tagName);
+        void PurgeUnusedTags();
     }
 }

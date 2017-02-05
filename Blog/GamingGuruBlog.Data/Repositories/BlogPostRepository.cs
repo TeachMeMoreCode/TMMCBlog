@@ -18,13 +18,30 @@ namespace GamingGuruBlog.Data.Repositories
                 parameter.Add("@BlogPostID", id);
                 var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).First();
                 string userId = blogPost.UserId;
-                parameter.Add("@UserID", userId);
                 blogPost.Author = GetAuthor(userId, connection);
                 blogPost.AssignedCategories = GetAssignedCategories(id, connection);
                 blogPost.AssignedTags = GetAssignedTags(id, connection);
 
                 return blogPost;
             }
+        }
+
+        public BlogPost GetApprovedBlogPost(int id)
+        {
+            //TODO: try-catch
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@BlogPostID", id);
+                var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID AND IsApproved = 1", parameter).First();
+                string userId = blogPost.UserId;
+                blogPost.Author = GetAuthor(userId, connection);
+                blogPost.AssignedCategories = GetAssignedCategories(id, connection);
+                blogPost.AssignedTags = GetAssignedTags(id, connection);
+
+                return blogPost;
+            }
+
         }
 
         public void EditBlogPost(BlogPost blogPost)
@@ -38,8 +55,9 @@ namespace GamingGuruBlog.Data.Repositories
                 parameters.Add("Summary", blogPost.Summary);
                 parameters.Add("BlogId", blogPost.BlogPostId);
                 parameters.Add("EditDate", blogPost.EditDate);
+                parameters.Add("IsApproved", blogPost.IsApproved);
 
-                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate WHERE BlogPostId = @BlogId", parameters);
+                connection.Execute("Update BlogPost set Title = @Title, Body = @Body, Summary = @Summary, EditDate = @EditDate, IsApproved = @IsApproved WHERE BlogPostId = @BlogId", parameters);
 
             }
         }
@@ -71,12 +89,33 @@ namespace GamingGuruBlog.Data.Repositories
                     myCommand.Parameters.AddWithValue("@Summary", newBlogPost.Summary);
                     myCommand.Parameters.AddWithValue("@UserId", newBlogPost.UserId);
                     myCommand.Parameters.AddWithValue("@DateCreatedUTC", newBlogPost.DateCreatedUTC);
+                    myCommand.Parameters.AddWithValue("@IsApproved", newBlogPost.IsApproved);
 
                     var newId = myCommand.ExecuteScalar();
                     return (int)newId;
                 }
 
             };
+        }
+
+        public List<BlogPost> ApprovedBlogPostsWithCategoriesAndTags()
+        {
+            //TODO: probably need a try-catch
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                List<BlogPost> allBlogPosts = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE IsApproved = 1 ORDER BY DateCreatedUTC DESC").ToList();
+
+                foreach (var blogPost in allBlogPosts)
+                {
+                    int blogId = blogPost.BlogPostId;
+                    string userId = blogPost.UserId;
+                    blogPost.Author = GetAuthor(userId, connection);
+                    blogPost.AssignedCategories = GetAssignedCategories(blogId, connection);
+                    blogPost.AssignedTags = GetAssignedTags(blogId, connection);
+                }
+                return allBlogPosts;
+            }
+
         }
 
         public List<BlogPost> GetAllBlogPostsWithCategoriesAndTags()
@@ -120,14 +159,14 @@ namespace GamingGuruBlog.Data.Repositories
             return connection.Query<User>("SELECT * FROM BlogPost AS bp JOIN AspNetUsers AS au ON bp.UserID = au.Id WHERE bp.UserID = @UserID", parameter).FirstOrDefault();
         }
 
-        public List<BlogPost> GetAllPostsByCategory(int id)
+        public List<BlogPost> GetApprovedPostsByCategory(int categoryID)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@CategoryID", id);
+                parameter.Add("@CategoryID", categoryID);
 
-                List<BlogPost> allPostsByCategory = connection.Query<BlogPost>("SELECT * FROM BlogPost as BP JOIN BlogCategory as BC ON BC.BlogPostID = BP.BlogPostID WHERE BC.CategoryID = @CategoryID ORDER BY DateCreatedUTC DESC", parameter).ToList();
+                List<BlogPost> allPostsByCategory = connection.Query<BlogPost>("SELECT * FROM BlogPost as BP JOIN BlogCategory as BC ON BC.BlogPostID = BP.BlogPostID WHERE BC.CategoryID = @CategoryID AND BP.IsApproved = 1 ORDER BY DateCreatedUTC DESC", parameter).ToList();
 
                 foreach (var blogPost in allPostsByCategory)
                 {
@@ -142,14 +181,14 @@ namespace GamingGuruBlog.Data.Repositories
             }
         }
 
-        public List<BlogPost> GetAllBlogPostsByTag(int id)
+        public List<BlogPost> GetpprovedBlogPostsByTag(int tagID)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@TagID", id);
+                parameter.Add("@TagID", tagID);
 
-                List<BlogPost> allPostsByTag = connection.Query<BlogPost>("SELECT * FROM BlogPost AS bp JOIN BlogTag AS bt on bp.BlogPostID = bt.BlogPostID WHERE bt.TagID = @TagID ORDER BY DateCreatedUTC DESC", parameter).ToList();
+                List<BlogPost> allPostsByTag = connection.Query<BlogPost>("SELECT * FROM BlogPost AS bp JOIN BlogTag AS bt on bp.BlogPostID = bt.BlogPostID WHERE bt.TagID = @TagID AND bp.IsApproved = 1 ORDER BY DateCreatedUTC DESC", parameter).ToList();
 
                 foreach (var blogPost in allPostsByTag)
                 {

@@ -15,7 +15,6 @@ namespace GamingGuruBlog.Domain
         private IBlogTagRepository _blogTagRepo;
         private ITagRepository _tagRepo;
 
-
         public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
         {
             _blogPostRepo = blogPostRepository;
@@ -31,6 +30,36 @@ namespace GamingGuruBlog.Domain
         public BlogPost GetBlogPost(int blogID)
         {
             return _blogPostRepo.GetBlogPost(blogID);
+        }
+
+        public BlogPost GetApprovedBlogPost(int id)
+        {
+            return _blogPostRepo.GetApprovedBlogPost(id);
+        }
+
+        public List<BlogPost> GetAllBlogPosts()
+        {
+            return _blogPostRepo.GetAllBlogPostsWithCategoriesAndTags();
+        }
+
+        public List<BlogPost> GetApprovedBlogPosts()
+        {
+            return _blogPostRepo.ApprovedBlogPostsWithCategoriesAndTags();
+        }
+
+        public List<BlogPost> AllBlogPostsByTag(int tagID)
+        {
+            return _blogPostRepo.GetpprovedBlogPostsByTag(tagID);
+        }
+
+        public void DeleteBlogPost(int blogID)
+        {
+            _blogPostRepo.DeleteBlogPost(blogID);
+        }
+
+        public List<BlogPost> GetBlogPostByCategoryID(int categoryID)
+        {
+            return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
         }
 
         public int AddNewBlogPost(BlogPost newPost)
@@ -63,6 +92,7 @@ namespace GamingGuruBlog.Domain
 
         public void ProcessEditedBlogPost(BlogPost editedBlogPost)
         {
+            editedBlogPost.EditDate = DateTime.Now;
             _blogPostRepo.EditBlogPost(editedBlogPost);
             int blogPostID = editedBlogPost.BlogPostId;
 
@@ -90,6 +120,9 @@ namespace GamingGuruBlog.Domain
                 _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
             }
 
+            // purge tags that are not used
+            _tagRepo.PurgeUnusedTags();
+
         }
 
         #endregion
@@ -97,7 +130,8 @@ namespace GamingGuruBlog.Domain
         #region Tags
         public List<Tag> GetAllTags()
         {
-            return _tagRepo.GetAllTags();
+
+            return _tagRepo.GetAssignedTags();
         }
 
         public List<Tag> AddCreatedTags(List<Tag> tagNames)
@@ -113,12 +147,54 @@ namespace GamingGuruBlog.Domain
         #endregion
 
         #region Categories
+
+        public void AddCategory(Category newCategory)
+        {
+            _categoryRepo.AddCategory(newCategory);
+        }
+
+        public void DeleteCategory(int categoryID)
+        {
+            _categoryRepo.DeleteCategory(categoryID);
+        }
+
+        public void EditCategory(Category changedCategory)
+        {
+            _categoryRepo.EditCategory(changedCategory);
+        }
+
+        public Category GetCategory(int categoryID)
+        {
+            return _categoryRepo.GetCategory(categoryID);
+        }
+
         public List<Category> GetAllCategories()
         {
             return _categoryRepo.GetAllCategories();
         }
 
-        #endregion 
+        public List<Category> GetUsedCategories()
+        {
+            return _categoryRepo.GetOnlyUsedCategories();
+        }
 
+        #endregion
+
+        #region User
+        public User GetUser(string userID)
+        {
+            return _userRepo.GetUser(userID);
+        }
+
+        public void EditUser(User editedUser)
+        {
+            _userRepo.EditUser(editedUser);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _userRepo.GetAllUsers();
+        }
+        #endregion
     }
 }
