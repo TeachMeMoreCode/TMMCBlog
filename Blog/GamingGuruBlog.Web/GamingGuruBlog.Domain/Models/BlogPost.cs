@@ -40,6 +40,7 @@ namespace GamingGuruBlog.Domain.Models
 
         public List<Tag> AssignedTags { get; set; }
 
+        [Display(Name = "Approved")]
         public bool IsApproved { get; set; }
     }
 

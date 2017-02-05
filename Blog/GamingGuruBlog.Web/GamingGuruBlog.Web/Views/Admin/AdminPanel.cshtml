@@ -141,8 +141,7 @@
                                 </span>
                             </a>
                         </td>
-                        <td><span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Go to Post"> @Html.ActionLink(post.Title, "GetBlogPost", "BlogPost", new { id = post.BlogPostId }, null) </span>
-                    </td>
+                        <td><span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Go to Post"> @Html.ActionLink(post.Title, "GetBlogPost", "BlogPost", new { id = post.BlogPostId }, null)</span></td>
                         <td>
                             <form action="@Url.Action("DeleteBlog", "BlogPost", new { id = post.BlogPostId })" method="post" data-toggle="tooltip" data-placement="left" title="Delete Post" class="pull-right">
                                 <button class="close pull-right" onclick="return confirm('Are you sure you want to delete @post.Title');">X</button>

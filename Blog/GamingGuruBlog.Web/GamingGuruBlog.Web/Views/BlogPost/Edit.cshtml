@@ -40,8 +40,14 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Tag, new { style = "font-size:24px" })
-                @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", Value=Model.TagString})            
+                @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", Value = Model.TagString})            
             </div>
+            <div class="form-check">
+                <label class="form-check-label" style = "font-size:24px">
+                    @Html.CheckBoxFor(model => model.BlogPost.IsApproved, new { style = "width:20px; height:20px;", Value = Model.BlogPost.IsApproved })   Approved
+                </label>
+            </div>
+            <br/>
             <div class="form-group">
                 <button type="submit" value="Save" class="btn btn-primary">Save</button>
                 @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning" })
@@ -57,4 +63,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 }
+
+@*@Html.LabelFor(model => model.BlogPost.IsApproved, new { @class = "form-check-label", style = "font-size:24px" })*@
+
 
