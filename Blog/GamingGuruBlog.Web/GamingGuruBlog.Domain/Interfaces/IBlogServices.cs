@@ -18,6 +18,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<BlogPost> AllBlogPostsByTag(int tagID);
         void DeleteBlogPost(int blogID);
         List<BlogPost> GetAllBlogPosts();
+        List<BlogPost> GetApprovedBlogPosts();
         User GetUser(string userID);
         void EditUser(User editedUser);
         List<User> GetAllUsers();

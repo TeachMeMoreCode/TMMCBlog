@@ -80,6 +80,26 @@ namespace GamingGuruBlog.Data.Repositories
             };
         }
 
+        public List<BlogPost> ApprovedBlogPostsWithCategoriesAndTags()
+        {
+            //TODO: probably need a try-catch
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                List<BlogPost> allBlogPosts = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE IsApproved = 1 ORDER BY DateCreatedUTC DESC").ToList();
+
+                foreach (var blogPost in allBlogPosts)
+                {
+                    int blogId = blogPost.BlogPostId;
+                    string userId = blogPost.UserId;
+                    blogPost.Author = GetAuthor(userId, connection);
+                    blogPost.AssignedCategories = GetAssignedCategories(blogId, connection);
+                    blogPost.AssignedTags = GetAssignedTags(blogId, connection);
+                }
+                return allBlogPosts;
+            }
+
+        }
+
         public List<BlogPost> GetAllBlogPostsWithCategoriesAndTags()
         {
 

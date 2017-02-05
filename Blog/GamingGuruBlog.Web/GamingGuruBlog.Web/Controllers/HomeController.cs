@@ -19,23 +19,8 @@ namespace GamingGuruBlog.Web.Controllers
         [HttpGet]
         public ActionResult Index(int? page)
         {
-            List<BlogPost> allBlogPosts = _blogServices.GetAllBlogPosts();
-            foreach (var post in allBlogPosts)
-            {
-                post.IsApproved = true;
-            }
+            List<BlogPost> allBlogPosts = _blogServices.GetApprovedBlogPosts();
             return (View(allBlogPosts.ToPagedList(pageNumber: page ?? 1, pageSize:5)));
-        }
-
-        [HttpGet]
-        public AllBlogPostsVM GetAllBlogPostsVM()
-        {
-            AllBlogPostsVM allBlogPosts = new AllBlogPostsVM();
-            allBlogPosts.AllBlogPosts = _blogServices.GetAllBlogPosts();
-            allBlogPosts.AllCategories = _blogServices.GetAllCategories();
-            allBlogPosts.AllTags = _blogServices.GetAllTags();
-
-            return allBlogPosts;
         }
 
     }

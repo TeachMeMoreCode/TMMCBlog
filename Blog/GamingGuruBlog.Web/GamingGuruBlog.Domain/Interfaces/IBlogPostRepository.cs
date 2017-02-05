@@ -12,5 +12,6 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<BlogPost> GetAllBlogPostsWithCategoriesAndTags();
         List<BlogPost> GetAllPostsByCategory(int id);
         List<BlogPost> GetAllBlogPostsByTag(int id);
+        List<BlogPost> ApprovedBlogPostsWithCategoriesAndTags();
     }
 }
