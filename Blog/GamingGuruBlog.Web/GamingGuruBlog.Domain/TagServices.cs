@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Domain
 {
-    class TageServices
+    class TagServices
     {
     }
 }
