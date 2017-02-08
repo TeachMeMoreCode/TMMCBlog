@@ -51,5 +51,14 @@ namespace GamingGuruBlog.Domain
         {
             return _categoryRepo.GetOnlyUsedCategories();
         }
+
+        public void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs)
+        {
+            foreach (var catID in categoryIDs)
+            {
+                _blogCategoryRepo.AddCategoryToBlog(blogPostID, catID.CategoryId);
+            }
+        }
+
     }
 }
