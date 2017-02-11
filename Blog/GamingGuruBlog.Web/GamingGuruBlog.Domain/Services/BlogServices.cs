@@ -22,7 +22,6 @@ namespace GamingGuruBlog.Domain
 
         }
 
-        #region BlogPost
         public BlogPost GetBlogPost(int blogID)
         {
             return _blogPostRepo.GetBlogPost(blogID);
@@ -98,24 +97,5 @@ namespace GamingGuruBlog.Domain
             _tagServices.PurgeUnusedTags();
 
         }
-
-        #endregion
-
-        #region User
-        public User GetUser(string userID)
-        {
-            return _userRepo.GetUser(userID);
-        }
-
-        public void EditUser(User editedUser)
-        {
-            _userRepo.EditUser(editedUser);
-        }
-
-        public List<User> GetAllUsers()
-        {
-            return _userRepo.GetAllUsers();
-        }
-        #endregion
     }
 }
