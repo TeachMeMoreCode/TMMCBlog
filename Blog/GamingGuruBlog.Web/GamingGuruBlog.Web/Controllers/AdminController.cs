@@ -8,11 +8,13 @@ namespace GamingGuruBlog.Web.Controllers
     {
         private IBlogServices _blogServices;
         private IStaticPageServices _staticPageServices;
+        private ICategoryServices _categoryServices;
 
-        public AdminController(IBlogServices newBlogServices, IStaticPageServices newStaticPageServices)
+        public AdminController(IBlogServices newBlogServices, IStaticPageServices newStaticPageServices, ICategoryServices newCategoryServices)
         {
             _blogServices = newBlogServices;
             _staticPageServices = newStaticPageServices;
+            _categoryServices = newCategoryServices;
         }
 
         // GET: Admin
@@ -21,7 +23,7 @@ namespace GamingGuruBlog.Web.Controllers
         {      
             AdminPanelVM model = new AdminPanelVM();
             model.Users = _blogServices.GetAllUsers();
-            model.Categories = _blogServices.GetAllCategories();
+            model.Categories = _categoryServices.GetAllCategories();
             model.StaticPages = _staticPageServices.GetAllStaticPages();
             model.BlogPosts = _blogServices.GetAllBlogPosts();
 

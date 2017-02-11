@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Domain
 {
-    public class CategoryServices
+    public class CategoryServices : ICategoryServices
     {
         private ICategoryRepository _categoryRepo;
         private IBlogCategoryRepository _blogCategoryRepo;
@@ -60,5 +60,9 @@ namespace GamingGuruBlog.Domain
             }
         }
 
+        public void DeleteCategoryFromBlogPost(int blogPostID)
+        {
+            _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+        }
     }
 }

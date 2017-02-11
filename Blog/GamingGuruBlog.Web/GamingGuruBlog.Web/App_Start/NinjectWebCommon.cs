@@ -71,6 +71,7 @@ namespace GamingGuruBlog.Web.App_Start
             kernel.Bind<IBlogTagRepository>().To<BlogTagRepository>();
             kernel.Bind<IBlogServices>().To<BlogServices>();
             kernel.Bind<IStaticPageServices>().To<StaticPageServices>();
+            kernel.Bind<ICategoryServices>().To<CategoryServices>();
         }
     }
 }

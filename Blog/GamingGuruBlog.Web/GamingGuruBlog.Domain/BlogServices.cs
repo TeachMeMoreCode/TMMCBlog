@@ -9,20 +9,16 @@ namespace GamingGuruBlog.Domain
     public class BlogServices : IBlogServices
     {
         private IBlogPostRepository _blogPostRepo;
-        private ICategoryRepository _categoryRepo;
         private IUserRepository _userRepo;
-        private IBlogCategoryRepository _blogCategoryRepo;
-        private IBlogTagRepository _blogTagRepo;
-        private ITagRepository _tagRepo;
+        private ITagServices _tagServices;
+        private ICategoryServices _categoryServices;
 
-        public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
+        public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
         {
             _blogPostRepo = blogPostRepository;
-            _categoryRepo = categoryRepository;
             _userRepo = userRepository;
-            _blogCategoryRepo = blogCategoryRepository;
-            _blogTagRepo = blogTagRepo;
-            _tagRepo = tagRepo;
+            _tagServices = newTagServices;
+            _categoryServices = newCategoryServices;
 
         }
 
@@ -47,9 +43,14 @@ namespace GamingGuruBlog.Domain
             return _blogPostRepo.ApprovedBlogPostsWithCategoriesAndTags();
         }
 
-        public List<BlogPost> AllBlogPostsByTag(int tagID)
+        public List<BlogPost> AllApprovedBlogPostsByTag(int tagID)
         {
-            return _blogPostRepo.GetpprovedBlogPostsByTag(tagID);
+            return _blogPostRepo.GetApprovedBlogPostsByTag(tagID);
+        }
+
+        public List<BlogPost> AllApprovedBlogPostsByCategoryID(int categoryID)
+        {
+            return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
         }
 
         public void DeleteBlogPost(int blogID)
@@ -57,37 +58,14 @@ namespace GamingGuruBlog.Domain
             _blogPostRepo.DeleteBlogPost(blogID);
         }
 
-        public List<BlogPost> GetBlogPostByCategoryID(int categoryID)
-        {
-            return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
-        }
-
-        public int AddNewBlogPost(BlogPost newPost)
+        public void AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
-            return newBlogId;
-        }
 
-        public List<Category> GetAssignedCategories(int blogID)
-        {
-            return _categoryRepo.GetAssignedcategories(blogID);
-        }
-
-        public void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs)
-        {
-            foreach (var catID in categoryIDs)
-            {
-                _blogCategoryRepo.AddCategoryToBlog(blogPostID, catID.CategoryId);
-            }
-        }
-
-        public void AddTagsToBlog(int blogID, List<Tag> tagIDs)
-        {
-            foreach (var tag in tagIDs)
-            {
-                _blogTagRepo.AddTagToBlog(blogID, tag.TagId);
-
-            }
+            //TODO: need to implement category services here
+            _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+            List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
+            _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
 
         public void ProcessEditedBlogPost(BlogPost editedBlogPost)
@@ -97,13 +75,10 @@ namespace GamingGuruBlog.Domain
             int blogPostID = editedBlogPost.BlogPostId;
 
             // remove all existing Categories from blog post
-            _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+            _categoryServices.DeleteCategoryFromBlogPost(blogPostID);
 
             // add selected categories to this blog post
-            foreach (var category in editedBlogPost.AssignedCategories)
-            {
-                _blogCategoryRepo.AddCategoryToBlog(blogPostID, category.CategoryId);
-            }
+            _categoryServices.AddCategoriesToBlogPost(blogPostID, editedBlogPost.AssignedCategories);
 
             List<string> justTagNames = new List<string>();
             foreach (var tag in editedBlogPost.AssignedTags)
@@ -111,71 +86,17 @@ namespace GamingGuruBlog.Domain
                 justTagNames.Add(tag.TagName);
             }
             // add newly created tag names to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
-            editedBlogPost.AssignedTags = _tagRepo.AddAllTags(justTagNames);
+            editedBlogPost.AssignedTags = _tagServices.AddAllTags(justTagNames);
+
             // remove all assigned tags to this blogPost
-            _blogTagRepo.DeleteTagFromBlog(blogPostID);
+            _tagServices.DeleteTagsFromBlog(blogPostID);
+
             // assign newly created Tags to this blog post
-            foreach (var tag in editedBlogPost.AssignedTags)
-            {
-                _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
-            }
+            _tagServices.AddTagsToBlog(blogPostID, editedBlogPost.AssignedTags);
 
             // purge tags that are not used
-            _tagRepo.PurgeUnusedTags();
+            _tagServices.PurgeUnusedTags();
 
-        }
-
-        #endregion
-
-        #region Tags
-        public List<Tag> GetAllTags()
-        {
-
-            return _tagRepo.GetAssignedTags();
-        }
-
-        public List<Tag> AddCreatedTags(List<Tag> tagNames)
-        {
-            List<string> justTagNames = new List<string>();
-
-            foreach (var tag in tagNames)
-            {
-                justTagNames.Add(tag.TagName);
-            }
-            return _tagRepo.AddAllTags(justTagNames);
-        }
-        #endregion
-
-        #region Categories
-
-        public void AddCategory(Category newCategory)
-        {
-            _categoryRepo.AddCategory(newCategory);
-        }
-
-        public void DeleteCategory(int categoryID)
-        {
-            _categoryRepo.DeleteCategory(categoryID);
-        }
-
-        public void EditCategory(Category changedCategory)
-        {
-            _categoryRepo.EditCategory(changedCategory);
-        }
-
-        public Category GetCategory(int categoryID)
-        {
-            return _categoryRepo.GetCategory(categoryID);
-        }
-
-        public List<Category> GetAllCategories()
-        {
-            return _categoryRepo.GetAllCategories();
-        }
-
-        public List<Category> GetUsedCategories()
-        {
-            return _categoryRepo.GetOnlyUsedCategories();
         }
 
         #endregion
