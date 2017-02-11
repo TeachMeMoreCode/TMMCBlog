@@ -12,5 +12,8 @@ namespace GamingGuruBlog.Domain.Interfaces
         List<Tag> GetAllTags();
         List<Tag> AddCreatedTags(List<Tag> tagNames);
         void AddTagsToBlog(int blogID, List<Tag> tagIDs);
+        List<Tag> AddAllTags(List<string> justTagNames);
+        void DeleteTagsFromBlog(int blogPostID);
+        void PurgeUnusedTags();
     }
 }

@@ -5,22 +5,28 @@ namespace GamingGuruBlog.Domain.Interfaces
 {
     public interface IBlogServices
     {
+        BlogPost GetBlogPost(int blogID);
+
+        BlogPost GetApprovedBlogPost(int id);
+
+        List<BlogPost> GetAllBlogPosts();
+
+        List<BlogPost> GetApprovedBlogPosts();
+
+        List<BlogPost> AllApprovedBlogPostsByTag(int tagID);
+
+        List<BlogPost> AllApprovedBlogPostsByCategoryID(int categoryID);
+
+        void DeleteBlogPost(int blogID);
+
         List<Category> GetAllCategories();
+
         List<Category> GetUsedCategories();
-        int AddNewBlogPost(BlogPost newPost);
+
+        void AddNewBlogPost(BlogPost newPost);
         List<Category> GetAssignedCategories(int blogID);
         void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs);
-        List<Tag> AddCreatedTags(List<Tag> tagNames);
-        void AddTagsToBlog(int blogID, List<Tag> tagID);
-        BlogPost GetBlogPost(int blogID);
-        BlogPost GetApprovedBlogPost(int id);
-        List<Tag> GetAllTags();
         void ProcessEditedBlogPost(BlogPost editedBlogPost);
-        List<BlogPost> GetBlogPostByCategoryID(int categoryID);
-        List<BlogPost> AllBlogPostsByTag(int tagID);
-        void DeleteBlogPost(int blogID);
-        List<BlogPost> GetAllBlogPosts();
-        List<BlogPost> GetApprovedBlogPosts();
         User GetUser(string userID);
         void EditUser(User editedUser);
         List<User> GetAllUsers();

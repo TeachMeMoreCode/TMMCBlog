@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Domain
 {
-    public class TagServices
+    public class TagServices : ITagServices
     {
         private ITagRepository _tagRepo;
         private IBlogTagRepository _blogTagRepo;
@@ -44,5 +44,19 @@ namespace GamingGuruBlog.Domain
             }
         }
 
+        public List<Tag> AddAllTags(List<string> justTagNames)
+        {
+            return _tagRepo.AddAllTags(justTagNames);
+        }
+
+        public void DeleteTagsFromBlog(int blogPostID)
+        {
+            _blogTagRepo.DeleteTagsFromBlog(blogPostID);
+        }
+
+        public void PurgeUnusedTags()
+        {
+            _tagRepo.PurgeUnusedTags();
+        }
     }
 }

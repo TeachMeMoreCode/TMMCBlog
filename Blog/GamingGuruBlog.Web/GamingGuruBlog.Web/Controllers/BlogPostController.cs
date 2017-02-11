@@ -56,14 +56,7 @@ namespace GamingGuruBlog.Web.Controllers
             {
                 newBlogPost.BlogPost.DateCreatedUTC = DateTime.Now;
                 BlogPost newPost = WebServices.ConvertBlogPostVMToBlogPost(newBlogPost);
-                int blogId = _blogServices.AddNewBlogPost(newPost);
-
-                _blogServices.AddCategoriesToBlogPost(blogId, newPost.AssignedCategories);
-
-                List<Tag> newTags = _blogServices.AddCreatedTags(newPost.AssignedTags);
-
-                _blogServices.AddTagsToBlog(blogId, newTags);
-
+                _blogServices.AddNewBlogPost(newPost);
                 return RedirectToAction("AdminPanel", "Admin");
             }
             List<Category> allCategories = _blogServices.GetAllCategories();
@@ -109,14 +102,14 @@ namespace GamingGuruBlog.Web.Controllers
         [HttpGet]
         public ActionResult BlogPostsByCategory(int id, int? page)
         {
-            var model = _blogServices.GetBlogPostByCategoryID(id);
+            var model = _blogServices.AllApprovedBlogPostsByCategoryID(id);
             return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 
         [HttpGet]
         public ActionResult BlogPostsByTag(int id, int? page)
         {
-            var model = _blogServices.AllBlogPostsByTag(id);
+            var model = _blogServices.AllApprovedBlogPostsByTag(id);
             return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 

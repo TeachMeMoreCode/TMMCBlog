@@ -12,7 +12,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         int AddBlogPost(BlogPost newBlogPost);
         List<BlogPost> GetAllBlogPostsWithCategoriesAndTags();
         List<BlogPost> GetApprovedPostsByCategory(int id);
-        List<BlogPost> GetpprovedBlogPostsByTag(int id);
+        List<BlogPost> GetApprovedBlogPostsByTag(int id);
         List<BlogPost> ApprovedBlogPostsWithCategoriesAndTags();
     }
 }

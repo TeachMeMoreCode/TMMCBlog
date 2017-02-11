@@ -181,7 +181,7 @@ namespace GamingGuruBlog.Data.Repositories
             }
         }
 
-        public List<BlogPost> GetpprovedBlogPostsByTag(int tagID)
+        public List<BlogPost> GetApprovedBlogPostsByTag(int tagID)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
