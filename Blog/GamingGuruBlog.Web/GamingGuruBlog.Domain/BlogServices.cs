@@ -12,17 +12,15 @@ namespace GamingGuruBlog.Domain
         private ICategoryRepository _categoryRepo;
         private IUserRepository _userRepo;
         private IBlogCategoryRepository _blogCategoryRepo;
-        private IBlogTagRepository _blogTagRepo;
 
         private ITagServices _tagServices;
 
-        public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagServices newTagServices)
+        public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, ITagServices newTagServices)
         {
             _blogPostRepo = blogPostRepository;
             _categoryRepo = categoryRepository;
             _userRepo = userRepository;
             _blogCategoryRepo = blogCategoryRepository;
-            _blogTagRepo = blogTagRepo;
 
             _tagServices = newTagServices;
 
@@ -144,7 +142,6 @@ namespace GamingGuruBlog.Domain
             _tagServices.PurgeUnusedTags();
 
         }
-
 
         public List<Category> GetAssignedCategories(int blogID)
         {
