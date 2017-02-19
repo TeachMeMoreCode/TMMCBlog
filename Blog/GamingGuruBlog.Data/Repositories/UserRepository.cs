@@ -44,12 +44,6 @@ namespace GamingGuruBlog.Data.Repositories
 
                 connection.Execute("Update AspNetUsers SET FirstName = @FirstName, LastName =@LastName Where ID = @UserID", parameters);
 
-                if (editedUser.Role != null)
-                {
-                    // need to get user Id then add role
-                    //connection.Execute($"UPDATE ")
-                }
-
             }
         }
        

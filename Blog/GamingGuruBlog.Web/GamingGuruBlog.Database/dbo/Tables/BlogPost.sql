@@ -6,12 +6,9 @@
     [UserID]         NVARCHAR (128) NOT NULL,
     [DateCreatedUTC] DATETIME       NOT NULL,
     [EditDate]       DATETIME       NULL,
-    [IsApproved]     BIT            NULL,
     PRIMARY KEY CLUSTERED ([BlogPostID] ASC),
     CONSTRAINT [FK_BlogPost_AspNetUsers] FOREIGN KEY ([UserID]) REFERENCES [dbo].[AspNetUsers] ([Id])
 );
-
-
 
 
 
