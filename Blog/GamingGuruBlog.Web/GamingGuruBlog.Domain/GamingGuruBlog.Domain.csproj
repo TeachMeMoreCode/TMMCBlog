@@ -70,18 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogServices.cs" />
     <Compile Include="CategoryServices.cs" />
     <Compile Include="Interfaces\IBlogServices.cs" />
-    <Compile Include="BlogServices.cs" />
     <Compile Include="Interfaces\IBlogCategoryRepository.cs" />
     <Compile Include="Interfaces\IBlogPostRepository.cs" />
     <Compile Include="Interfaces\IBlogTagRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\ICategoryServices.cs" />
     <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\IStaticPageRepository.cs" />
     <Compile Include="Interfaces\IStaticPageServices.cs" />
     <Compile Include="Interfaces\ITagRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IUserServices.cs" />
     <Compile Include="Models\BlogCategory.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogTag.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticPageServices.cs" />
     <Compile Include="TagServices.cs" />
+    <Compile Include="UserServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
