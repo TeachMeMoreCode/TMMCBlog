@@ -113,7 +113,7 @@ namespace GamingGuruBlog.Domain
             // add newly created tag names to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
             editedBlogPost.AssignedTags = _tagRepo.AddAllTags(justTagNames);
             // remove all assigned tags to this blogPost
-            _blogTagRepo.DeleteTagFromBlog(blogPostID);
+            _blogTagRepo.DeleteTagsFromBlog(blogPostID);
             // assign newly created Tags to this blog post
             foreach (var tag in editedBlogPost.AssignedTags)
             {
