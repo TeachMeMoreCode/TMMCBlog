@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamingGuruBlog.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Domain.Interfaces
 {
-    public interface IBlogTagRepository
+    public interface IRole
     {
-        void AddTagToBlog(int blogPostId, int tag);
-        void DeleteTagsFromBlog(int blogPostId);
+        List<Role> AllRoles();
     }
 }
