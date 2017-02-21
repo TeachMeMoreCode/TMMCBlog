@@ -16,7 +16,7 @@ namespace GamingGuruBlog.Data.Repositories
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@BlogPostID", id);
-                var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).First();
+                var blogPost = connection.Query<BlogPost>("SELECT * FROM BlogPost WHERE BlogPostID = @BlogPostID", parameter).SingleOrDefault();
                 string userId = blogPost.UserId;
                 blogPost.Author = GetAuthor(userId, connection);
                 blogPost.AssignedCategories = GetAssignedCategories(id, connection);
