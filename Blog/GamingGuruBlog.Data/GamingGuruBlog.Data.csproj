@@ -79,6 +79,7 @@
     <Compile Include="Repositories\BlogPostRepository.cs" />
     <Compile Include="Repositories\BlogTagRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\Settings.cs" />
     <Compile Include="Repositories\StaticPageRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />

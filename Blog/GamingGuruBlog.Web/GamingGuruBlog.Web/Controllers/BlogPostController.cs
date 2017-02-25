@@ -25,7 +25,12 @@ namespace GamingGuruBlog.Web.Controllers
         {
             //TODO: check id is valid
             BlogPost existingPost = _blogServices.GetApprovedBlogPost(id);
-            return View(existingPost);
+
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+       
+            var model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
+
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
@@ -61,7 +66,6 @@ namespace GamingGuruBlog.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-
             BlogPost existingPost = _blogServices.GetBlogPost(id);
             List<Category> allCategories = _categoryServices.GetAllCategories();
             BlogPostVM model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
