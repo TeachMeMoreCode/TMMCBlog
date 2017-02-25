@@ -14,12 +14,12 @@ namespace GamingGuruBlog.Domain
         private ICategoryServices _categoryServices;
 
         public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
+
         {
             _blogPostRepo = blogPostRepository;
             _userRepo = userRepository;
             _tagServices = newTagServices;
             _categoryServices = newCategoryServices;
-
         }
 
         #region BlogPost
@@ -47,7 +47,7 @@ namespace GamingGuruBlog.Domain
         {
             return _blogPostRepo.GetApprovedBlogPostsByTag(tagID);
         }
-
+        
         public List<BlogPost> AllApprovedBlogPostsByCategoryID(int categoryID)
         {
             return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
@@ -64,6 +64,7 @@ namespace GamingGuruBlog.Domain
 
             //TODO: need to implement category services here
             _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+
             List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
             _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
@@ -98,8 +99,6 @@ namespace GamingGuruBlog.Domain
             _tagServices.PurgeUnusedTags();
 
         }
-
-        #endregion
 
         #region User
         public User GetUser(string userID)
