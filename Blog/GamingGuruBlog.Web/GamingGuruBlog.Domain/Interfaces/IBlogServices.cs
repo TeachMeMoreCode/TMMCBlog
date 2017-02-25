@@ -22,11 +22,5 @@ namespace GamingGuruBlog.Domain.Interfaces
         void AddNewBlogPost(BlogPost newPost);
       
         void ProcessEditedBlogPost(BlogPost editedBlogPost);
-      
-        User GetUser(string userID);
-      
-        void EditUser(User editedUser);
-      
-        List<User> GetAllUsers();
     }
 }

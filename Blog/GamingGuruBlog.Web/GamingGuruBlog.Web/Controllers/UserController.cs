@@ -6,30 +6,30 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class UserController : Controller
     {
-        private IBlogServices _blogServices;
+        private IUserServices _userServices;
 
-        public UserController(IBlogServices newBlogServices)
+        public UserController(IUserServices newUserServices)
         {
-            _blogServices = newBlogServices;
+            _userServices = newUserServices;
         }
 
         // GET: User
         public ActionResult GetUser(string id)
         {
-            _blogServices.GetUser(id);
+            _userServices.GetUser(id);
             return View();
         }
 
         public ActionResult EditUser(string id)
         {
-            var model = _blogServices.GetUser(id);
+            var model = _userServices.GetUser(id);
             return View(model);            
         }
 
         [HttpPost]
         public ActionResult EditUser(User editedUser)
         {
-                _blogServices.EditUser(editedUser);
+                _userServices.EditUser(editedUser);
                 return RedirectToAction("Index", "Home");
         }
     }
