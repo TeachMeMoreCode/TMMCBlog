@@ -1,13 +1,9 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Domain.Models;
-using GamingGuruBlog.Domain;
 using GamingGuruBlog.Web.Models;
-using GamingGuruBlog;
 using System;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 
@@ -32,7 +28,6 @@ namespace GamingGuruBlog.Web.Controllers
             return View(existingPost);
         }
 
-        // GET: BlogPost
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Post()
@@ -41,7 +36,7 @@ namespace GamingGuruBlog.Web.Controllers
             newPost.UserId = User.Identity.GetUserId();
             List<Category> allCategories = _categoryServices.GetAllCategories();
 
-            var model = WebServices.ConvertBlogPostToVeiwModel(newPost, allCategories);
+            var model = UIServices.ConvertBlogPostToVeiwModel(newPost, allCategories);
 
             return View(model);
         }
@@ -53,12 +48,12 @@ namespace GamingGuruBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 newBlogPost.BlogPost.DateCreatedUTC = DateTime.Now;
-                BlogPost newPost = WebServices.ConvertBlogPostVMToBlogPost(newBlogPost);
+                BlogPost newPost = UIServices.ConvertBlogPostVMToBlogPost(newBlogPost);
                 _blogServices.AddNewBlogPost(newPost);
                 return RedirectToAction("AdminPanel", "Admin");
             }
             List<Category> allCategories = _categoryServices.GetAllCategories();
-            var model = WebServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
+            var model = UIServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
             return View(model);
         }
 
@@ -69,7 +64,7 @@ namespace GamingGuruBlog.Web.Controllers
 
             BlogPost existingPost = _blogServices.GetBlogPost(id);
             List<Category> allCategories = _categoryServices.GetAllCategories();
-            BlogPostVM model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
+            BlogPostVM model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
 
             return View(model);
         }
@@ -80,7 +75,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                BlogPost postToBeProcessed = WebServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
+                BlogPost postToBeProcessed = UIServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
                 _blogServices.ProcessEditedBlogPost(postToBeProcessed);
 
                 return RedirectToAction("AdminPanel", "Admin");

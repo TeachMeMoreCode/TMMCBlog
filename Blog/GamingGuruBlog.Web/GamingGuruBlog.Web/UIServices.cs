@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace GamingGuruBlog.Web
 {
-    public static class WebServices
+    public static class UIServices
     {
 
         public static BlogPostVM ConvertBlogPostToVeiwModel(BlogPost blogPost, List<Category> allCategories)
