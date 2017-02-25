@@ -10,14 +10,18 @@ namespace GamingGuruBlog.Web.Controllers
     {
         private IBlogServices _blogServices;
         private IStaticPageServices _staticPageServices;
+        private ICategoryServices _categoryServices;
         private ITagServices _tagServices;
+        private IUserServices _userServices;
 
 
-        public PartialViewController(IBlogServices newBlogservices, IStaticPageServices newStaticPageServices, ITagServices newTagServices)
+        public PartialViewController(IBlogServices newBlogservices, IStaticPageServices newStaticPageServices, ICategoryServices newCategoryServices, ITagServices newTagServices, IUserServices newUserServices)
         {
             _blogServices = newBlogservices;
             _staticPageServices = newStaticPageServices;
+            _categoryServices = newCategoryServices;
             _tagServices = newTagServices;
+            _userServices = newUserServices;
         }
         // GET: PartialView
         public PartialViewResult Action()
@@ -30,7 +34,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             AllBlogPostsVM result = new AllBlogPostsVM();
             result.AllBlogPosts = _blogServices.GetAllBlogPosts();
-            result.AllCategories = _blogServices.GetUsedCategories();
+            result.AllCategories = _categoryServices.GetUsedCategories();
             result.AllTags = _tagServices.GetAllTags();
 
             return PartialView("~/Views/Shared/_BlogWidgetPartial.cshtml", result);
@@ -38,7 +42,7 @@ namespace GamingGuruBlog.Web.Controllers
 
         public PartialViewResult AdminPanelTabbedUsers()
         {
-            var model = _blogServices.GetAllUsers();
+            var model = _userServices.GetAllUsers();
             return PartialView("~/Views/PartialView/AdminPanelTabbedUsers.cshtml", model);
         }
 

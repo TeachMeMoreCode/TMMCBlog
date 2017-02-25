@@ -11,6 +11,7 @@ namespace GamingGuruBlog.Web.App_Start
     using Domain.Interfaces;
     using Data.Repositories;
     using Domain;
+    using Domain.Services;
 
     public static class NinjectWebCommon 
     {
@@ -71,6 +72,8 @@ namespace GamingGuruBlog.Web.App_Start
             kernel.Bind<IBlogTagRepository>().To<BlogTagRepository>();
             kernel.Bind<IBlogServices>().To<BlogServices>();
             kernel.Bind<IStaticPageServices>().To<StaticPageServices>();
+            kernel.Bind<ICategoryServices>().To<CategoryServices>();
+            kernel.Bind<IUserServices>().To<UserServices>();
             kernel.Bind<ITagServices>().To<TagServices>();
         }
     }

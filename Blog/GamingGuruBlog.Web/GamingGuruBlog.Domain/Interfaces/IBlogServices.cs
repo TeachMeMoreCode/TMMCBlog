@@ -19,20 +19,8 @@ namespace GamingGuruBlog.Domain.Interfaces
 
         void DeleteBlogPost(int blogID);
 
-        List<Category> GetAllCategories();
-
-        List<Category> GetUsedCategories();
-
         void AddNewBlogPost(BlogPost newPost);
-        List<Category> GetAssignedCategories(int blogID);
-        void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs);
+
         void ProcessEditedBlogPost(BlogPost editedBlogPost);
-        User GetUser(string userID);
-        void EditUser(User editedUser);
-        List<User> GetAllUsers();
-        void DeleteCategory(int categoryID);
-        void EditCategory(Category changedCategory);
-        Category GetCategory(int categoryID);
-        void AddCategory(Category newCategory);
     }
 }

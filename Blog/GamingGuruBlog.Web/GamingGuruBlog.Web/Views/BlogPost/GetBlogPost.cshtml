@@ -1,4 +1,4 @@
-﻿@model GamingGuruBlog.Web.Models.BlogPostVM
+﻿@model GamingGuruBlog.Domain.Models.BlogPost
 @{
     ViewBag.Title = "GetBlogPost";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,24 +7,24 @@
 
 
 
-<h1 class="page-header">@Model.BlogPost.Title</h1>
+<h1 class="page-header">@Model.Title</h1>
 <div class="group1 col-sm-6 col-md-6">
-    <span class="glyphicon glyphicon-user"></span> @Model.BlogPost.Author.FirstName @Model.BlogPost.Author.LastName
+    <span class="glyphicon glyphicon-user"></span> @Model.Author.FirstName @Model.Author.LastName
 </div>
 <div class="group2 col-sm-6 col-md-6">
-    <div class="col-xs-6"><span class="glyphicon glyphicon-time"></span><span class="text-left"> @Html.DisplayFor(m => Model.BlogPost.DateCreatedUTC)  </span></div>
-    @if (Model.BlogPost.EditDate != null)
-            { <div class="col-xs-6"><span class="glyphicon glyphicon-edit text-right"></span><span> @Html.DisplayFor(m => Model.BlogPost.EditDate)</span></div>}
+    <div class="col-xs-6"><span class="glyphicon glyphicon-time"></span><span class="text-left"> @Html.DisplayFor(m => Model.DateCreatedUTC)  </span></div>
+    @if (Model.EditDate != null)
+            { <div class="col-xs-6"><span class="glyphicon glyphicon-edit text-right"></span><span> @Html.DisplayFor(m => Model.EditDate)</span></div>}
 </div>
 <div class="col-sm-12 col-md-12">
     <span class="glyphicon glyphicon-folder-open"></span>
-    @foreach (var category in Model.BlogPost.AssignedCategories)
+    @foreach (var category in Model.AssignedCategories)
             {
         @Html.ActionLink("[" + category.CategoryName + "]", "BlogPostsByCategory", "BlogPost", new { id = category.CategoryId }, null)
     }
     <span class="glyphicon glyphicon-bookmark"></span>
 
-    @foreach (var tag in Model.BlogPost.AssignedTags)
+    @foreach (var tag in Model.AssignedTags)
 
             {
         <a href="#">@tag.TagName </a>
@@ -36,10 +36,10 @@
 <!-- Post Content -->
 
 <div class="col-sm-12 col-md-12">
-    @Html.Raw(Model.BlogPost.Body)
+    @Html.Raw(Model.Body)
 </div>
 
 <div class="col-sm-12 col-md-12">
-    @Html.Raw(Model.BlogPost.Summary)
+    @Html.Raw(Model.Summary)
 </div>
 <hr>

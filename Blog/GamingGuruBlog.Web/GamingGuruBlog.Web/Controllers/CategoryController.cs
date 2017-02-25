@@ -7,12 +7,11 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class CategoryController : Controller
     {
+        private ICategoryServices _categoryServices;
 
-        private IBlogServices _blogServices;
-
-        public CategoryController(IBlogServices newBlogServices)
+        public CategoryController( ICategoryServices newcategoryServices)
         {
-            _blogServices = newBlogServices;
+            _categoryServices = newcategoryServices;
         }
 
         // GET: Category
@@ -26,7 +25,7 @@ namespace GamingGuruBlog.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditCategory(int id)
         {
-            var model = _blogServices.GetCategory(id);
+            var model = _categoryServices.GetCategory(id);
             return View(model);
         }
 
@@ -36,7 +35,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             try
             {
-                _blogServices.EditCategory(newCategory);
+                _categoryServices.EditCategory(newCategory);
                 return RedirectToAction("AdminPanel", "Admin");
             }
             catch (Exception)
@@ -56,7 +55,7 @@ namespace GamingGuruBlog.Web.Controllers
             }
             try
             {
-                _blogServices.AddCategory(newCategory);
+                _categoryServices.AddCategory(newCategory);
                 return RedirectToAction("AdminPanel", "Admin");
             }
             catch (Exception)
@@ -72,7 +71,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             try
             {
-                _blogServices.DeleteCategory(id);
+                _categoryServices.DeleteCategory(id);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)

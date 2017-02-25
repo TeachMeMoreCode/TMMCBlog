@@ -1,13 +1,9 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Domain.Models;
-using GamingGuruBlog.Domain;
 using GamingGuruBlog.Web.Models;
-using GamingGuruBlog;
 using System;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 
@@ -16,10 +12,12 @@ namespace GamingGuruBlog.Web.Controllers
     public class BlogPostController : Controller
     {
         private IBlogServices _blogServices;
+        private ICategoryServices _categoryServices;
 
-        public BlogPostController( IBlogServices newBlogServices)
+        public BlogPostController( IBlogServices newBlogServices, ICategoryServices newCategoryServices)
         {
             _blogServices = newBlogServices;
+            _categoryServices = newCategoryServices;
         }
 
         [HttpGet]
@@ -27,23 +25,23 @@ namespace GamingGuruBlog.Web.Controllers
         {
             //TODO: check id is valid
             BlogPost existingPost = _blogServices.GetApprovedBlogPost(id);
-            List<Category> allCategories = _blogServices.GetAllCategories();
+
+            List<Category> allCategories = _categoryServices.GetAllCategories();
        
-            var model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
+            var model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
 
             return View(model);
         }
 
-        // GET: BlogPost
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Post()
         {
             BlogPost newPost = new BlogPost();
             newPost.UserId = User.Identity.GetUserId();
-            List<Category> allCategories = _blogServices.GetAllCategories();
+            List<Category> allCategories = _categoryServices.GetAllCategories();
 
-            var model = WebServices.ConvertBlogPostToVeiwModel(newPost, allCategories);
+            var model = UIServices.ConvertBlogPostToVeiwModel(newPost, allCategories);
 
             return View(model);
         }
@@ -55,12 +53,12 @@ namespace GamingGuruBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 newBlogPost.BlogPost.DateCreatedUTC = DateTime.Now;
-                BlogPost newPost = WebServices.ConvertBlogPostVMToBlogPost(newBlogPost);
+                BlogPost newPost = UIServices.ConvertBlogPostVMToBlogPost(newBlogPost);
                 _blogServices.AddNewBlogPost(newPost);
                 return RedirectToAction("AdminPanel", "Admin");
             }
-            List<Category> allCategories = _blogServices.GetAllCategories();
-            var model = WebServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+            var model = UIServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
             return View(model);
         }
 
@@ -68,10 +66,9 @@ namespace GamingGuruBlog.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-
             BlogPost existingPost = _blogServices.GetBlogPost(id);
-            List<Category> allCategories = _blogServices.GetAllCategories();
-            BlogPostVM model = WebServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+            BlogPostVM model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
 
             return View(model);
         }
@@ -82,7 +79,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                BlogPost postToBeProcessed = WebServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
+                BlogPost postToBeProcessed = UIServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
                 _blogServices.ProcessEditedBlogPost(postToBeProcessed);
 
                 return RedirectToAction("AdminPanel", "Admin");

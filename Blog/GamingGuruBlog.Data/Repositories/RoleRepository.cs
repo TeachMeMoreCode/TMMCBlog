@@ -1,4 +1,4 @@
-﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using GamingGuruBlog.Domain.Models;
