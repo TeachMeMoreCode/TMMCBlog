@@ -63,7 +63,8 @@ namespace GamingGuruBlog.Domain
 
             //TODO: need to implement category services here
             _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
-            List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
+
+            List<Tag> newTags = _tagServices.AddCreatedTags(newPost.AssignedTags);
             _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
 
