@@ -1,22 +1,17 @@
-﻿using GamingGuruBlog.Data.Interfaces;
-using GamingGuruBlog.Data.Models;
+﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GamingGuruBlog.Web.Controllers
 {
     public class CategoryController : Controller
     {
+        private ICategoryServices _categoryServices;
 
-        private ICategoryRepository _categoryRepo { get; set; }
-
-
-        public CategoryController(ICategoryRepository categoryRepo)
+        public CategoryController( ICategoryServices newcategoryServices)
         {
-            _categoryRepo = categoryRepo;
+            _categoryServices = newcategoryServices;
         }
 
         // GET: Category
@@ -30,7 +25,7 @@ namespace GamingGuruBlog.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditCategory(int id)
         {
-            var model = _categoryRepo.GetCategory(id);
+            var model = _categoryServices.GetCategory(id);
             return View(model);
         }
 
@@ -40,7 +35,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             try
             {
-                _categoryRepo.EditCategory(newCategory);
+                _categoryServices.EditCategory(newCategory);
                 return RedirectToAction("AdminPanel", "Admin");
             }
             catch (Exception)
@@ -60,8 +55,8 @@ namespace GamingGuruBlog.Web.Controllers
             }
             try
             {
-                _categoryRepo.AddCategory(newCategory);
-                return RedirectToAction("Index", "Home");
+                _categoryServices.AddCategory(newCategory);
+                return RedirectToAction("AdminPanel", "Admin");
             }
             catch (Exception)
             {
@@ -76,7 +71,7 @@ namespace GamingGuruBlog.Web.Controllers
         {
             try
             {
-                _categoryRepo.DeleteCategory(id);
+                _categoryServices.DeleteCategory(id);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)

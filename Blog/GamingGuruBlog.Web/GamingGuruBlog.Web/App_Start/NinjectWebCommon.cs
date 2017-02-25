@@ -5,13 +5,14 @@ namespace GamingGuruBlog.Web.App_Start
 {
     using System;
     using System.Web;
-
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
     using Ninject;
     using Ninject.Web.Common;
-    using Data.Interfaces;
+    using Domain.Interfaces;
     using Data.Repositories;
+    using Domain;
+    using Domain.Services;
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -69,6 +70,11 @@ namespace GamingGuruBlog.Web.App_Start
             kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
             kernel.Bind<IStaticPageRepository>().To<StaticPageRepository>();
             kernel.Bind<IBlogTagRepository>().To<BlogTagRepository>();
+            kernel.Bind<IBlogServices>().To<BlogServices>();
+            kernel.Bind<IStaticPageServices>().To<StaticPageServices>();
+            kernel.Bind<ICategoryServices>().To<CategoryServices>();
+            kernel.Bind<IUserServices>().To<UserServices>();
+            kernel.Bind<ITagServices>().To<TagServices>();
         }
     }
 }

@@ -6,9 +6,11 @@ namespace GamingGuruBlog.Domain.Interfaces
     public interface ICategoryRepository
     {
         List<Category> GetAllCategories();
+        List<Category> GetOnlyUsedCategories();
         Category GetCategory(int id);
         void DeleteCategory(int id);
         void AddCategory(Category newCategory);
         void EditCategory(Category updatedCategory);
+        List<Category> GetAssignedcategories(int blogID);
     }
 }

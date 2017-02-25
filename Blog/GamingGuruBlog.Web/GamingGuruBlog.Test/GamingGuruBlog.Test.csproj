@@ -88,9 +88,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GamingGuruBlog.Data\GamingGuruBlog.Data.csproj">
-      <Project>{757FEC43-FB0D-4046-AE61-D3526975E8BC}</Project>
-      <Name>GamingGuruBlog.Data</Name>
+    <ProjectReference Include="..\GamingGuruBlog.Domain\GamingGuruBlog.Domain.csproj">
+      <Project>{886d3c0c-5a80-47e1-87d3-77841d5197b4}</Project>
+      <Name>GamingGuruBlog.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\GamingGuruBlog.Web\GamingGuruBlog.Web.csproj">
       <Project>{C006353F-98B0-4383-972F-6B23433D72D5}</Project>

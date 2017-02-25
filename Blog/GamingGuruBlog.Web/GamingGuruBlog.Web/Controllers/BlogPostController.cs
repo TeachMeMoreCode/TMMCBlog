@@ -1,11 +1,9 @@
-﻿using GamingGuruBlog.Data.Interfaces;
+﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using GamingGuruBlog.Web.Models;
-using GamingGuruBlog;
 using System;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 
@@ -13,40 +11,33 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class BlogPostController : Controller
     {
-        private IBlogPostRepository _blogPostRepo;
-        private ICategoryRepository _categoryRepo;
-        private IUserRepository _userRepo;
-        private IBlogCategoryRepository _blogCategoryRepo;
-        private IBlogTagRepository _blogTagRepo;
-        private ITagRepository _tagRepo;
-        //private BlogServices _services;
+        private IBlogServices _blogServices;
+        private ICategoryServices _categoryServices;
 
-        public BlogPostController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, IBlogTagRepository blogTagRepo, ITagRepository tagRepo)
+        public BlogPostController( IBlogServices newBlogServices, ICategoryServices newCategoryServices)
         {
-            _blogPostRepo = blogPostRepository;
-            _categoryRepo = categoryRepository;
-            _userRepo = userRepository;
-            _blogCategoryRepo = blogCategoryRepository;
-            _blogTagRepo = blogTagRepo;
-            _tagRepo = tagRepo;
-
+            _blogServices = newBlogServices;
+            _categoryServices = newCategoryServices;
         }
 
         [HttpGet]
         public ActionResult GetBlogPost(int id)
         {
             //TODO: check id is valid
-            var model = GetSinglePostVM(id);
-            return View(model);
+            BlogPost existingPost = _blogServices.GetApprovedBlogPost(id);
+            return View(existingPost);
         }
 
-        // GET: BlogPost
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public ActionResult Post()
         {
-            var model = PopulatedCategorySelectListItem();
-            model.BlogPost.DateCreatedUTC = DateTime.UtcNow;
-            model.BlogPost.UserId = User.Identity.GetUserId();
+            BlogPost newPost = new BlogPost();
+            newPost.UserId = User.Identity.GetUserId();
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+
+            var model = UIServices.ConvertBlogPostToVeiwModel(newPost, allCategories);
+
             return View(model);
         }
 
@@ -56,123 +47,64 @@ namespace GamingGuruBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var blogId = _blogPostRepo.AddBlogPost(newBlogPost.BlogPost);
-
-                foreach (var category in newBlogPost.CategoryArray)
-                {
-                    _blogCategoryRepo.AddCategoryToBlog(blogId, int.Parse(category));
-                }
-
-                string[] postTags = newBlogPost.Tag.TagName.ToLower().Split(' ');
-                newBlogPost.Tags = _tagRepo.SelectAllTags(postTags);
-
-                foreach (var tag in newBlogPost.Tags)
-                {
-                    _blogTagRepo.AddTagToBlog(blogId, tag.TagId);
-                }
-
-                return RedirectToAction("Index", "Home");
+                newBlogPost.BlogPost.DateCreatedUTC = DateTime.Now;
+                BlogPost newPost = UIServices.ConvertBlogPostVMToBlogPost(newBlogPost);
+                _blogServices.AddNewBlogPost(newPost);
+                return RedirectToAction("AdminPanel", "Admin");
             }
-            return View(PopulatedCategorySelectListItem(newBlogPost));
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+            var model = UIServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public ActionResult Edit(int id)
         {
 
-            var model = PopulatedCategorySelectListItem();
-            model.BlogPost = _blogPostRepo.GetBlogPost(id);
-            model.TagString = string.Join(" ", model.BlogPost.AssignedTags.Select(assignedTag => assignedTag.TagName));
-            model.BlogPost.EditDate = DateTime.UtcNow;
+            BlogPost existingPost = _blogServices.GetBlogPost(id);
+            List<Category> allCategories = _categoryServices.GetAllCategories();
+            BlogPostVM model = UIServices.ConvertBlogPostToVeiwModel(existingPost, allCategories);
 
             return View(model);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Edit(BlogPostVM editedBlogPost)
+        public ActionResult Edit(BlogPostVM editedBlogPostVM)
         {
             if (ModelState.IsValid)
             {
-                _blogPostRepo.EditBlogPost(editedBlogPost.BlogPost);
-                var blogPostID = editedBlogPost.BlogPost.BlogPostId;
-                _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+                BlogPost postToBeProcessed = UIServices.ConvertBlogPostVMToBlogPost(editedBlogPostVM);
+                _blogServices.ProcessEditedBlogPost(postToBeProcessed);
 
-                foreach (var category in editedBlogPost.CategoryArray)
-                {
-                    _blogCategoryRepo.AddCategoryToBlog(blogPostID, int.Parse(category));
-                }
-
-                string[] postTags = editedBlogPost.Tag.TagName.ToLower().Split(' ');
-                editedBlogPost.Tags = _tagRepo.SelectAllTags(postTags);
-                _blogTagRepo.DeleteTagFromBlog(blogPostID);
-                foreach (var tag in editedBlogPost.Tags)
-                {
-                    _blogTagRepo.AddTagToBlog(blogPostID, tag.TagId);
-                }
-
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AdminPanel", "Admin");
             }
-            return View(editedBlogPost);
+            return View(editedBlogPostVM);
 
         }
-
-        public ActionResult BlogPostsByCategory(int id, int? page)
-        {
-            var model = _blogPostRepo.GetAllPostsByCategory(id);
-            return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
-        }
-
-        public ActionResult BlogPostsByTag(int id, int? page)
-        {
-
-            var model = _blogPostRepo.GetAllBlogPostsByTag(id);
-
-            return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
-        }
-
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult DeleteBlog(int id)
         {
-            _blogPostRepo.DeleteBlogPost(id);
+            _blogServices.DeleteBlogPost(id); //_blogPostRepo.DeleteBlogPost(id);
             return RedirectToAction("AdminPanel", "Admin");
         }
 
-
-        public BlogPostVM GetSinglePostVM(int id)
+        [HttpGet]
+        public ActionResult BlogPostsByCategory(int id, int? page)
         {
-            BlogPostVM populatedBlogPost = new BlogPostVM();
-            populatedBlogPost.BlogPost = _blogPostRepo.GetBlogPost(id);
-            populatedBlogPost.BlogPost.BlogPostId = id;
-            populatedBlogPost.Categories = _categoryRepo.GetAllCategories();
-            populatedBlogPost.Tags = _tagRepo.GetAllTags();
-            return populatedBlogPost;
+            var model = _blogServices.AllApprovedBlogPostsByCategoryID(id);
+            return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 
-        private BlogPostVM PopulatedCategorySelectListItem()
+        [HttpGet]
+        public ActionResult BlogPostsByTag(int id, int? page)
         {
-            BlogPostVM blogPostVM = new BlogPostVM();
-            return PopulatedCategorySelectListItem(blogPostVM);
+            var model = _blogServices.AllApprovedBlogPostsByTag(id);
+            return (View(model.ToPagedList(pageNumber: page ?? 1, pageSize: 5)));
         }
 
-        private BlogPostVM PopulatedCategorySelectListItem(BlogPostVM returnedBlogPost)
-        {
-
-            var categoryListItems = _categoryRepo.GetAllCategories();
-
-            foreach (var category in categoryListItems)
-            {
-                SelectListItem categoryList = new SelectListItem()
-                {
-                    Text = category.CategoryName,
-                    Value = category.CategoryId.ToString()
-                };
-                returnedBlogPost.CategoryList.Add(categoryList);
-            }
-
-            return returnedBlogPost;
-        }
     }
 }

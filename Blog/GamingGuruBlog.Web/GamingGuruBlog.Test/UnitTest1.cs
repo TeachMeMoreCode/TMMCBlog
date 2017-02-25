@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GamingGuruBlog.Web.Controllers;
 using System.Web.Mvc;
-using GamingGuruBlog.Data.Models;
+using GamingGuruBlog.Domain.Models;
 
 namespace GamingGuruBlog.Test
 {

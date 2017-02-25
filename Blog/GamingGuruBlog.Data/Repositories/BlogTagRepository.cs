@@ -20,7 +20,7 @@ namespace GamingGuruBlog.Data.Repositories
             };
         }
 
-        public void DeleteTagFromBlog(int blogPostId)
+        public void DeleteTagsFromBlog(int blogPostId)
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {

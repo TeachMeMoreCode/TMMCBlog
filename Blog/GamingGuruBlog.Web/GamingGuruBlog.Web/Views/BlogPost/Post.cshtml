@@ -14,9 +14,9 @@
             @Html.HiddenFor(m => m.BlogPost.DateCreatedUTC)
             @Html.HiddenFor(m => m.BlogPost.UserId)
             <div class="form-group">
-                @Html.LabelFor(model => model.Categories, new { style = "font-size:24px" })
-                @Html.ListBoxFor(model => model.CategoryArray, Model.CategoryList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryArray)
+                @Html.LabelFor(model => model.AllCategories, new { style = "font-size:24px" })
+                @Html.ListBoxFor(model => model.ChosenCategoriesArray, Model.CategorySelectListItemList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ChosenCategoriesArray)
                
             </div>
             <div class="form-group">

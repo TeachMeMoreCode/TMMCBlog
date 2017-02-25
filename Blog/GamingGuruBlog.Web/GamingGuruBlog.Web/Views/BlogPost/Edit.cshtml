@@ -17,8 +17,8 @@
             @Html.HiddenFor(m => m.BlogPost.UserId)
             @Html.HiddenFor(m => m.BlogPost.EditDate)
             <div class="form-group">
-                @Html.LabelFor(model => model.Categories, new { style = "font-size:24px" })
-                @Html.ListBoxFor(model => model.CategoryArray, new MultiSelectList(Model.CategoryList, "Value", "Text", Model.BlogPost.AssignedCategories.Select(category=> category.CategoryId).ToArray()), new { @class = "form-control"})
+                @Html.LabelFor(model => model.AllCategories, new { style = "font-size:24px" })
+                @Html.ListBoxFor(model => model.ChosenCategoriesArray, new MultiSelectList(Model.CategorySelectListItemList, "Value", "Text", Model.BlogPost.AssignedCategories.Select(category=> category.CategoryId).ToArray()), new { @class = "form-control"})
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.BlogPost.Title, new { style = "font-size:24px" })
@@ -40,8 +40,14 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Tag, new { style = "font-size:24px" })
-                @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", Value=Model.TagString})            
+                @Html.TextBoxFor(model => model.Tag.TagName, new { @class = "form-control", Value = Model.TagString})            
             </div>
+            <div class="form-check">
+                <label class="form-check-label" style ="font-size:24px">
+                    @Html.EditorFor(model => model.BlogPost.IsApproved, new { style = "form-control width:20px; height:20px;", Value = Model.BlogPost.IsApproved })   Approved
+                </label>
+            </div>
+            <br/>
             <div class="form-group">
                 <button type="submit" value="Save" class="btn btn-primary">Save</button>
                 @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning" })
@@ -57,4 +63,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 }
+
+@*@Html.LabelFor(model => model.BlogPost.IsApproved, new { @class = "form-check-label", style = "font-size:24px" })*@
+
 
