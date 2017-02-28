@@ -9,21 +9,17 @@ namespace GamingGuruBlog.Domain
     public class BlogServices : IBlogServices
     {
         private IBlogPostRepository _blogPostRepo;
-        private ICategoryRepository _categoryRepo;
         private IUserRepository _userRepo;
-        private IBlogCategoryRepository _blogCategoryRepo;
-
         private ITagServices _tagServices;
+        private ICategoryServices _categoryServices;
 
-        public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, ITagServices newTagServices)
+        public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
+
         {
             _blogPostRepo = blogPostRepository;
-            _categoryRepo = categoryRepository;
             _userRepo = userRepository;
-            _blogCategoryRepo = blogCategoryRepository;
-
             _tagServices = newTagServices;
-
+            _categoryServices = newCategoryServices;
         }
 
         #region BlogPost
@@ -51,7 +47,7 @@ namespace GamingGuruBlog.Domain
         {
             return _blogPostRepo.GetApprovedBlogPostsByTag(tagID);
         }
-
+        
         public List<BlogPost> AllApprovedBlogPostsByCategoryID(int categoryID)
         {
             return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
@@ -62,49 +58,13 @@ namespace GamingGuruBlog.Domain
             _blogPostRepo.DeleteBlogPost(blogID);
         }
 
-        #region Categories
-
-        public List<Category> GetAllCategories()
-        {
-            return _categoryRepo.GetAllCategories();
-        }
-
-        public List<Category> GetUsedCategories()
-        {
-            return _categoryRepo.GetOnlyUsedCategories();
-        }
-
-        public void AddCategory(Category newCategory)
-        {
-            _categoryRepo.AddCategory(newCategory);
-        }
-
-        public void DeleteCategory(int categoryID)
-        {
-            _categoryRepo.DeleteCategory(categoryID);
-        }
-
-        public void EditCategory(Category changedCategory)
-        {
-            _categoryRepo.EditCategory(changedCategory);
-        }
-
-        public Category GetCategory(int categoryID)
-        {
-            return _categoryRepo.GetCategory(categoryID);
-        }
-
-
-
-        #endregion
-
-
         public void AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
 
             //TODO: need to implement category services here
-            AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+            _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+
             List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
             _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
@@ -116,13 +76,10 @@ namespace GamingGuruBlog.Domain
             int blogPostID = editedBlogPost.BlogPostId;
 
             // remove all existing Categories from blog post
-            _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
+            _categoryServices.DeleteCategoryFromBlogPost(blogPostID);
 
             // add selected categories to this blog post
-            foreach (var category in editedBlogPost.AssignedCategories)
-            {
-                _blogCategoryRepo.AddCategoryToBlog(blogPostID, category.CategoryId);
-            }
+            _categoryServices.AddCategoriesToBlogPost(blogPostID, editedBlogPost.AssignedCategories);
 
             List<string> justTagNames = new List<string>();
             foreach (var tag in editedBlogPost.AssignedTags)
@@ -142,22 +99,6 @@ namespace GamingGuruBlog.Domain
             _tagServices.PurgeUnusedTags();
 
         }
-
-        public List<Category> GetAssignedCategories(int blogID)
-        {
-            return _categoryRepo.GetAssignedcategories(blogID);
-        }
-
-        public void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs)
-        {
-            foreach (var catID in categoryIDs)
-            {
-                _blogCategoryRepo.AddCategoryToBlog(blogPostID, catID.CategoryId);
-            }
-        }
-
-
-        #endregion
 
         #region User
         public User GetUser(string userID)

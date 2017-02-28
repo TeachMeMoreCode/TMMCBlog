@@ -24,6 +24,7 @@ namespace GamingGuruBlog.Web.Controllers
         public ActionResult AdminPanel()
         {      
             AdminPanelVM model = new AdminPanelVM();
+
             model.Users = _userServices.GetAllUsers();
             model.Categories = _categoryServices.GetAllCategories();
             model.StaticPages = _staticPageServices.GetAllStaticPages();
