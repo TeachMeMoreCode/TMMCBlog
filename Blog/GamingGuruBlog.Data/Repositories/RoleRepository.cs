@@ -1,37 +1,21 @@
-using Dapper;
 using GamingGuruBlog.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using GamingGuruBlog.Domain.Models;
 using System.Data.SqlClient;
-
+using Dapper;
 namespace GamingGuruBlog.Data.Repositories
 {
-    public class RoleRepository
+    class RoleRepository : IRole
     {
-        public void AddTagToBlog(int blogPostId, int tagId)
+        public List<Role> AllRoles()
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
-
-                var param = new DynamicParameters();
-
-                param.Add("Tid", tagId);
-                param.Add("Bid", blogPostId);
-
-                connection.Execute("INSERT INTO BlogTag (TagID, BlogPostID) VALUES(@Tid, @Bid)", param);
-            };
-        }
-
-        public void DeleteTagsFromBlog(int blogPostId)
-        {
-            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
-            {
-                var param = new DynamicParameters();
-                param.Add("Bid", blogPostId);
-
-                connection.Execute("Delete From BlogTag Where BlogPostID = @Bid", param);
+                List<Role> allRoles = new List<Role>();
+                allRoles = connection.Query<Role>("SELECT * FROM AspNetRoles").ToList();
             }
+            return AllRoles();
         }
-
-
     }
-
 }

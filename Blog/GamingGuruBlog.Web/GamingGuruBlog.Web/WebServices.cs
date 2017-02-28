@@ -39,6 +39,12 @@ namespace GamingGuruBlog.Web
             return returnedBlogPost;
         }
 
+        public static AdminPanelVM GetAdminPanelVM(List<BlogPost> allBlogPosts, List<Category> allcategories, List<StaticPage> allStaticPages, List<User> allUsers)
+        {
+            //need to create Role model for selecting roles
+            return new AdminPanelVM();
+        }
+
         private static List<Category> CreateListOfCategory(string[] chosenCategories)
         {
             List<Category> categoriesToBeProcessed = new List<Category>();
