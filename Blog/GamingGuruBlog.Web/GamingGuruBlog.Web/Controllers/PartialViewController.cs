@@ -14,7 +14,6 @@ namespace GamingGuruBlog.Web.Controllers
         private ITagServices _tagServices;
         private IUserServices _userServices;
 
-
         public PartialViewController(IBlogServices newBlogservices, IStaticPageServices newStaticPageServices, ICategoryServices newCategoryServices, ITagServices newTagServices, IUserServices newUserServices)
         {
             _blogServices = newBlogservices;
