@@ -58,6 +58,7 @@ namespace GamingGuruBlog.Web.Controllers
             }
             List<Category> allCategories = _categoryServices.GetAllCategories();
             var model = UIServices.ConvertBlogPostToVeiwModel(newBlogPost.BlogPost, allCategories);
+
             return View(model);
         }
 

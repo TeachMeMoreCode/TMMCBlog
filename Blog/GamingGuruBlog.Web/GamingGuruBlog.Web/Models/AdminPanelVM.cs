@@ -13,6 +13,7 @@ namespace GamingGuruBlog.Web.Models
         public List<Category> Categories { get; set; }
         public List<StaticPage> StaticPages { get; set; }
         public List<BlogPost> BlogPosts { get; set; }
+        public List<SelectListItem> Roles { get; set; }
 
     }
 }

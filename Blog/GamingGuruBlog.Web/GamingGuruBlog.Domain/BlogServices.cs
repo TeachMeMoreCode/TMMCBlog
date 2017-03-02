@@ -11,19 +11,32 @@ namespace GamingGuruBlog.Domain
         private IBlogPostRepository _blogPostRepo;
         private ICategoryRepository _categoryRepo;
         private IUserRepository _userRepo;
+<<<<<<< HEAD
         private IBlogCategoryRepository _blogCategoryRepo;
 
         private ITagServices _tagServices;
 
         public BlogServices(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IBlogCategoryRepository blogCategoryRepository, ITagServices newTagServices)
+=======
+        private ITagServices _tagServices;
+        private ICategoryServices _categoryServices;
+
+        public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
+
+>>>>>>> master
         {
             _blogPostRepo = blogPostRepository;
             _categoryRepo = categoryRepository;
             _userRepo = userRepository;
+<<<<<<< HEAD
             _blogCategoryRepo = blogCategoryRepository;
 
             _tagServices = newTagServices;
 
+=======
+            _tagServices = newTagServices;
+            _categoryServices = newCategoryServices;
+>>>>>>> master
         }
 
         #region BlogPost
@@ -51,7 +64,7 @@ namespace GamingGuruBlog.Domain
         {
             return _blogPostRepo.GetApprovedBlogPostsByTag(tagID);
         }
-
+        
         public List<BlogPost> AllApprovedBlogPostsByCategoryID(int categoryID)
         {
             return _blogPostRepo.GetApprovedPostsByCategory(categoryID);
@@ -62,6 +75,7 @@ namespace GamingGuruBlog.Domain
             _blogPostRepo.DeleteBlogPost(blogID);
         }
 
+<<<<<<< HEAD
         #region Categories
 
         public List<Category> GetAllCategories()
@@ -105,6 +119,15 @@ namespace GamingGuruBlog.Domain
 
             //TODO: need to implement category services here
             AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+=======
+        public void AddNewBlogPost(BlogPost newPost)
+        {
+            int newBlogId = _blogPostRepo.AddBlogPost(newPost);
+
+            //TODO: need to implement category services here
+            _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+
+>>>>>>> master
             List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
             _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
@@ -142,6 +165,7 @@ namespace GamingGuruBlog.Domain
             _tagServices.PurgeUnusedTags();
 
         }
+<<<<<<< HEAD
 
         public List<Category> GetAssignedCategories(int blogID)
         {
@@ -158,6 +182,8 @@ namespace GamingGuruBlog.Domain
 
 
         #endregion
+=======
+>>>>>>> master
 
         #region User
         public User GetUser(string userID)
