@@ -22,47 +22,6 @@ namespace GamingGuruBlog.Domain
 
         }
 
-        public void AddNewBlogPost(BlogPost newPost)
-        {
-            int newBlogId = _blogPostRepo.AddBlogPost(newPost);
-
-            //TODO: need to implement category services here
-            _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
-            List<Tag> newTags = _tagServices.AddCreatedTags(newPost.AssignedTags);
-            _tagServices.AddTagsToBlog(newBlogId, newTags);
-        }
-
-        public void ProcessEditedBlogPost(BlogPost editedBlogPost)
-        {
-            editedBlogPost.EditDate = DateTime.Now;
-            _blogPostRepo.EditBlogPost(editedBlogPost);
-            int blogPostID = editedBlogPost.BlogPostId;
-
-            // remove all existing Categories from blog post
-            _categoryServices.DeleteCategoryFromBlogPost(blogPostID);
-
-            // add selected categories to this blog post
-            _categoryServices.AddCategoriesToBlogPost(blogPostID, editedBlogPost.AssignedCategories);
-
-            List<string> justTagNames = new List<string>();
-            foreach (var tag in editedBlogPost.AssignedTags)
-            {
-                justTagNames.Add(tag.TagName);
-            }
-            // add newly created tag names to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
-            editedBlogPost.AssignedTags = _tagServices.AddAllTags(justTagNames);
-
-            // remove all assigned tags to this blogPost
-            _tagServices.DeleteTagsFromBlog(blogPostID);
-
-            // assign newly created Tags to this blog post
-            _tagServices.AddTagsToBlog(blogPostID, editedBlogPost.AssignedTags);
-
-            // purge tags that are not used
-            _tagServices.PurgeUnusedTags();
-
-        }
-
         public BlogPost GetBlogPost(int blogID)
         {
             return _blogPostRepo.GetBlogPost(blogID);
@@ -98,6 +57,46 @@ namespace GamingGuruBlog.Domain
             _blogPostRepo.DeleteBlogPost(blogID);
         }
 
+        public void AddNewBlogPost(BlogPost newPost)
+        {
+            int newBlogId = _blogPostRepo.AddBlogPost(newPost);
 
+            //TODO: need to implement category services here
+            _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
+
+            List<Tag> newTags = _tagServices.AddCreatedTags(newPost.AssignedTags);
+            _tagServices.AddTagsToBlog(newBlogId, newTags);
+        }
+
+        public void ProcessEditedBlogPost(BlogPost editedBlogPost)
+        {
+            editedBlogPost.EditDate = DateTime.Now;
+            _blogPostRepo.EditBlogPost(editedBlogPost);
+            int blogPostID = editedBlogPost.BlogPostId;
+
+            // remove all existing Categories from blog post
+            _categoryServices.DeleteCategoryFromBlogPost(blogPostID);
+
+            // add selected categories to this blog post
+            _categoryServices.AddCategoriesToBlogPost(blogPostID, editedBlogPost.AssignedCategories);
+
+            List<string> justTagNames = new List<string>();
+            foreach (var tag in editedBlogPost.AssignedTags)
+            {
+                justTagNames.Add(tag.TagName);
+            }
+            // add newly created tag names to tag repo, assigns them valid tagIDs, returns list of valid Tag objects
+            editedBlogPost.AssignedTags = _tagServices.AddAllTags(justTagNames);
+
+            // remove all assigned tags to this blogPost
+            _tagServices.DeleteTagsFromBlog(blogPostID);
+
+            // assign newly created Tags to this blog post
+            _tagServices.AddTagsToBlog(blogPostID, editedBlogPost.AssignedTags);
+
+            // purge tags that are not used
+            _tagServices.PurgeUnusedTags();
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Interfaces;
 using GamingGuruBlog.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,6 @@ namespace GamingGuruBlog.Domain
         private ICategoryServices _categoryServices;
 
         public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
-
         {
             _blogPostRepo = blogPostRepository;
             _userRepo = userRepository;
@@ -22,7 +21,6 @@ namespace GamingGuruBlog.Domain
             _categoryServices = newCategoryServices;
         }
 
-        #region BlogPost
         public BlogPost GetBlogPost(int blogID)
         {
             return _blogPostRepo.GetBlogPost(blogID);
@@ -61,10 +59,7 @@ namespace GamingGuruBlog.Domain
         public void AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
-
-            //TODO: need to implement category services here
             _categoryServices.AddCategoriesToBlogPost(newBlogId, newPost.AssignedCategories);
-
             List<Tag> newTags =  _tagServices.AddCreatedTags(newPost.AssignedTags);
             _tagServices.AddTagsToBlog(newBlogId, newTags);
         }
@@ -97,24 +92,6 @@ namespace GamingGuruBlog.Domain
 
             // purge tags that are not used
             _tagServices.PurgeUnusedTags();
-
         }
-
-        #region User
-        public User GetUser(string userID)
-        {
-            return _userRepo.GetUser(userID);
-        }
-
-        public void EditUser(User editedUser)
-        {
-            _userRepo.EditUser(editedUser);
-        }
-
-        public List<User> GetAllUsers()
-        {
-            return _userRepo.GetAllUsers();
-        }
-        #endregion
     }
 }
