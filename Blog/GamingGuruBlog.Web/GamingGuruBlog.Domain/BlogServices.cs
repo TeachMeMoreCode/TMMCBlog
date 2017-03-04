@@ -16,6 +16,7 @@ namespace GamingGuruBlog.Domain
         public BlogServices(IBlogPostRepository blogPostRepository, IUserRepository userRepository, ITagServices newTagServices, ICategoryServices newCategoryServices)
         {
             _blogPostRepo = blogPostRepository;
+            _categoryRepo = categoryRepository;
             _userRepo = userRepository;
             _tagServices = newTagServices;
             _categoryServices = newCategoryServices;
@@ -56,6 +57,7 @@ namespace GamingGuruBlog.Domain
             _blogPostRepo.DeleteBlogPost(blogID);
         }
 
+
         public void AddNewBlogPost(BlogPost newPost)
         {
             int newBlogId = _blogPostRepo.AddBlogPost(newPost);
@@ -71,10 +73,13 @@ namespace GamingGuruBlog.Domain
             int blogPostID = editedBlogPost.BlogPostId;
 
             // remove all existing Categories from blog post
-            _categoryServices.DeleteCategoryFromBlogPost(blogPostID);
+            _blogCategoryRepo.DeleteCategoryFromBlogPost(blogPostID);
 
             // add selected categories to this blog post
-            _categoryServices.AddCategoriesToBlogPost(blogPostID, editedBlogPost.AssignedCategories);
+            foreach (var category in editedBlogPost.AssignedCategories)
+            {
+                _blogCategoryRepo.AddCategoryToBlog(blogPostID, category.CategoryId);
+            }
 
             List<string> justTagNames = new List<string>();
             foreach (var tag in editedBlogPost.AssignedTags)
@@ -92,6 +97,34 @@ namespace GamingGuruBlog.Domain
 
             // purge tags that are not used
             _tagServices.PurgeUnusedTags();
+        }
+
+        public List<Category> GetAssignedCategories(int blogID)
+        {
+            return _categoryRepo.GetAssignedcategories(blogID);
+        }
+
+        public void AddCategoriesToBlogPost(int blogPostID, List<Category> categoryIDs)
+        {
+            foreach (var catID in categoryIDs)
+            {
+                _blogCategoryRepo.AddCategoryToBlog(blogPostID, catID.CategoryId);
+            }
+        }
+
+        public User GetUser(string userID)
+        {
+            return _userRepo.GetUser(userID);
+        }
+
+        public void EditUser(User editedUser)
+        {
+            _userRepo.EditUser(editedUser);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _userRepo.GetAllUsers();
         }
     }
 }

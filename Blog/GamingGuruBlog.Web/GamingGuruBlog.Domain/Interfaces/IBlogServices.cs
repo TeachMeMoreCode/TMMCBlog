@@ -20,7 +20,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         void DeleteBlogPost(int blogID);
 
         void AddNewBlogPost(BlogPost newPost);
-      
+
         void ProcessEditedBlogPost(BlogPost editedBlogPost);
     }
 }
