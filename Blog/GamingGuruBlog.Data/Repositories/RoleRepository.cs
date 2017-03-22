@@ -6,16 +6,16 @@ using System.Data.SqlClient;
 using Dapper;
 namespace GamingGuruBlog.Data.Repositories
 {
-    class RoleRepository : IRole
+    public class RoleRepository : IRoleRepository
     {
-        public List<Role> AllRoles()
+        public List<Role> GetUserRoles()
         {
+            List<Role> allRoles = new List<Role>();
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
-                List<Role> allRoles = new List<Role>();
                 allRoles = connection.Query<Role>("SELECT * FROM AspNetRoles").ToList();
             }
-            return AllRoles();
+            return allRoles;
         }
     }
 }

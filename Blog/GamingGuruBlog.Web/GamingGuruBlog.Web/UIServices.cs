@@ -100,5 +100,20 @@ namespace GamingGuruBlog.Web
             return tagSelectListItemList;
         }
 
+        private static List<SelectListItem> CreateSelectListItemList(List<Role> collection)
+        {
+            List<SelectListItem> roleSelectListItemList = new List<SelectListItem>();
+            foreach (var item in collection)
+            {
+                SelectListItem newItem = new SelectListItem()
+                {
+                    Text = item.Name,
+                    Value = item.RoleId.ToString()
+                };
+                roleSelectListItemList.Add(newItem);
+            }
+            return roleSelectListItemList;
+        }
+
     }
 }

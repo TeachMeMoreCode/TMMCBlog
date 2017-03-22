@@ -11,10 +11,12 @@ namespace GamingGuruBlog.Domain.Services
     public class UserServices : IUserServices
     {
         private IUserRepository _userRepo;
+        private IRoleRepository _roleRepo;
 
-        public UserServices(IUserRepository newUserRepo)
+        public UserServices(IUserRepository newUserRepo, IRoleRepository newUserRoleRepo)
         {
             _userRepo = newUserRepo;
+            _roleRepo = newUserRoleRepo;
         }
 
         public User GetUser(string userID)
@@ -30,6 +32,11 @@ namespace GamingGuruBlog.Domain.Services
         public List<User> GetAllUsers()
         {
             return _userRepo.GetAllUsers();
+        }
+
+        public List<Role> GetUserRoles()
+        {
+            return _roleRepo.GetUserRoles();
         }
 
     }

@@ -46,6 +46,6 @@ namespace GamingGuruBlog.Data.Repositories
 
             }
         }
-       
+
     }
 }

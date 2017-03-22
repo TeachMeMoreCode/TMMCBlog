@@ -29,6 +29,8 @@ namespace GamingGuruBlog.Web.Controllers
             model.StaticPages = _staticPageServices.GetAllStaticPages();
             model.BlogPosts = _blogServices.GetAllBlogPosts();
 
+
+
             return View(model);
         }
 

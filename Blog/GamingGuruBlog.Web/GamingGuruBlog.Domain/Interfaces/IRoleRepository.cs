@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace GamingGuruBlog.Domain.Interfaces
 {
-    public interface IRole
+    public interface IRoleRepository
     {
-        List<Role> AllRoles();
+        List<Role> GetUserRoles();
     }
 }

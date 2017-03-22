@@ -79,7 +79,7 @@
     <Compile Include="Interfaces\IBlogTagRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\ICategoryServices.cs" />
-    <Compile Include="Interfaces\IRole.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IStaticPageRepository.cs" />
     <Compile Include="Interfaces\IStaticPageServices.cs" />
     <Compile Include="Interfaces\ITagRepository.cs" />
