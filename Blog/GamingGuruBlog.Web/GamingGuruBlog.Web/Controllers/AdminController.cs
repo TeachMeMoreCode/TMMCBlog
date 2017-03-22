@@ -28,8 +28,8 @@ namespace GamingGuruBlog.Web.Controllers
             model.Categories = _categoryServices.GetAllCategories();
             model.StaticPages = _staticPageServices.GetAllStaticPages();
             model.BlogPosts = _blogServices.GetAllBlogPosts();
-
-
+            var roles = _userServices.GetUserRoles();
+            model.UserRoles = UIServices.CreateSelectListItemList(roles);
 
             return View(model);
         }
