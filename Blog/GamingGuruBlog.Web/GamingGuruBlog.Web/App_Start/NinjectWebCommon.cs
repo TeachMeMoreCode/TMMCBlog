@@ -75,6 +75,7 @@ namespace GamingGuruBlog.Web.App_Start
             kernel.Bind<ICategoryServices>().To<CategoryServices>();
             kernel.Bind<IUserServices>().To<UserServices>();
             kernel.Bind<ITagServices>().To<TagServices>();
+            kernel.Bind<IRoleRepository>().To<RoleRepository>();
         }
     }
 }
