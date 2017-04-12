@@ -17,5 +17,15 @@ namespace GamingGuruBlog.Data.Repositories
             }
             return allRoles;
         }
+
+        public Role GetRole(int roleId)
+        {
+            Role userRole = new Role();
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                userRole = connection.Query<Role>($"SELECT * FROM AspNetRoles WHERE id = {roleId}").SingleOrDefault();
+            }
+            return userRole;
+        }
     }
 }

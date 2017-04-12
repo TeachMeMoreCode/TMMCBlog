@@ -10,5 +10,6 @@ namespace GamingGuruBlog.Domain.Interfaces
     public interface IRoleRepository
     {
         List<Role> GetUserRoles();
+        Role GetRole(int roleId);
     }
 }

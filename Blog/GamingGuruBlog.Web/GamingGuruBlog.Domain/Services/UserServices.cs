@@ -39,5 +39,14 @@ namespace GamingGuruBlog.Domain.Services
             return _roleRepo.GetUserRoles();
         }
 
+        public Role GetRole(int roleId)
+        {
+            return _roleRepo.GetRole(roleId);
+        }
+
+        public void EditUserRole(SetRoleID newRole)
+        {
+            _userRepo.EditUserRole(newRole);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Domain.Models;
 using GamingGuruBlog.Web.Models;
 using System.Web.Mvc;
 
@@ -34,7 +35,19 @@ namespace GamingGuruBlog.Web.Controllers
             return View(model);
         }
 
-       
+       [Authorize(Roles = "Admin")]
+       [HttpPost]
+       public JsonResult UserRole(SetRoleID input)
+        {
+            var user = _userServices.GetUser(input.UserId);
+            if (user != null)
+            {
+                _userServices.EditUserRole(input);
+            }
+            var editedUser = _userServices.GetUser(input.UserId);
+
+            return Json(editedUser);
+        }
 
     }
 }

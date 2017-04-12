@@ -13,9 +13,17 @@ namespace GamingGuruBlog.Data.Repositories
         {
             using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
             {
-                List<User> user = connection.Query<User>("select * from AspNetUsers").ToList();
+                List<User> allUsers = connection.Query<User>("select * from AspNetUsers").ToList();
 
-                return user;
+                foreach (var user in allUsers)
+                {
+                    var parameter = new DynamicParameters();
+                    parameter.Add("UserID", user.ID);
+                    user.Role = connection.Query<Role>("SELECT Id, Name FROM AspNetRoles AS roles JOIN AspNetUserRoles AS userRole ON roles.Id = userRole.RoleId WHERE userRole.UserId = @UserID", parameter).SingleOrDefault();
+                }
+
+
+                return allUsers;
             }
         }
 
@@ -26,9 +34,11 @@ namespace GamingGuruBlog.Data.Repositories
                 //TODO: try-catch
                 var parameters = new DynamicParameters();
                 parameters.Add("@ID", id);
-                User user = connection.Query<User>("select * from AspNetUsers where ID = @ID",parameters).SingleOrDefault();
-
-                return user;
+                User singleUser = connection.Query<User>("select * from AspNetUsers where ID = @ID",parameters).SingleOrDefault();
+                parameters.Add("UserID", singleUser.ID);
+                singleUser.Role = connection.Query<Role>("SELECT Id, Name FROM AspNetRoles AS roles JOIN AspNetUserRoles AS userRole ON roles.Id = userRole.RoleId WHERE userRole.UserId = @UserID", parameters).SingleOrDefault();
+            
+                return singleUser;
             }
         }
 
@@ -44,6 +54,18 @@ namespace GamingGuruBlog.Data.Repositories
 
                 connection.Execute("Update AspNetUsers SET FirstName = @FirstName, LastName =@LastName Where ID = @UserID", parameters);
 
+            }
+        }
+
+        public void EditUserRole(SetRoleID editedUserRole)
+        {
+            //TODO try-catch
+            var parameters = new DynamicParameters();
+            parameters.Add("UserID", editedUserRole.UserId);
+            parameters.Add("RoleID", editedUserRole.RoleId);
+            using (SqlConnection connection = new SqlConnection(Settings.ConnectionString))
+            {
+                connection.Execute("UPDATE AspNetUserRoles SET RoleId = @RoleID WHERE UserId = @UserID", parameters);
             }
         }
 

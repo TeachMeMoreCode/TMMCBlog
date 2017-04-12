@@ -108,7 +108,7 @@ namespace GamingGuruBlog.Web
                 SelectListItem newItem = new SelectListItem()
                 {
                     Text = item.Name,
-                    Value = item.RoleId.ToString()
+                    Value = item.Id.ToString()
                 };
                 roleSelectListItemList.Add(newItem);
             }

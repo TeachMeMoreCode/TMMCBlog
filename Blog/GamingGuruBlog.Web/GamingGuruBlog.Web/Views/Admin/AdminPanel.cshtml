@@ -6,6 +6,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $(document.body).on('change', '.Users', function (event) {
+            var item = $(this);
+            var elemID = event.target.id;
+            alert(item.val() + " " + elemID);
+        });
+    });
+</script>*@
+
 <h2>Admin Panel</h2>
 
 <hr />
@@ -30,6 +40,8 @@
 <div class="tab-content clearfix">
     <div class="tab-pane fade in active" id="userTab">
         <br />
+        @using (Html.BeginForm("","", FormMethod.Post)) 
+        {
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -47,13 +59,12 @@
                         <td>@user.FirstName</td>
                         <td>@user.LastName</td>
                         <td>@user.Email</td>
-                        <td>@Html.DropDownListFor(x => x.Users, Model.UserRoles)</td>
-                        <td></td>
+                        <td>@Html.DropDownListFor(x => x.Users, Model.UserRoles, new { id = user.ID, @class = "Users" })</td>
                     </tr>
-                }
+                    }
             </tbody>
         </table>
-        @*@Html.ActionLink("Assign User A Role", "Index", "BlogPost", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-primary" })*@
+        }
     </div>
 
     <div class="tab-pane fade" id="static">
@@ -176,17 +187,13 @@
 
 
 
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+
 
 @section Scripts
 {
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/app/jquery.selectedTab.js"></script>
+    <script src="~/Scripts/app/getSelectedValue.js"></script>
 }
 
 

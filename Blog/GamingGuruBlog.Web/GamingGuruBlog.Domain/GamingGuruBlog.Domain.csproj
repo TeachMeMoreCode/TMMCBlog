@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IUserServices.cs" />
+    <Compile Include="Models\SetRoleID.cs" />
     <Compile Include="Services\CategoryServices.cs" />
     <Compile Include="Interfaces\IBlogServices.cs" />
     <Compile Include="Services\BlogServices.cs" />
