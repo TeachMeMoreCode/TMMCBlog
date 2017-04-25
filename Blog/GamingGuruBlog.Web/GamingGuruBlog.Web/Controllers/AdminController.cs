@@ -30,7 +30,7 @@ namespace GamingGuruBlog.Web.Controllers
             model.StaticPages = _staticPageServices.GetAllStaticPages();
             model.BlogPosts = _blogServices.GetAllBlogPosts();
             var roles = _userServices.GetUserRoles();
-            model.UserRoles = UIServices.CreateSelectListItemList(roles);
+            model.UserRoles = roles;
 
             return View(model);
         }

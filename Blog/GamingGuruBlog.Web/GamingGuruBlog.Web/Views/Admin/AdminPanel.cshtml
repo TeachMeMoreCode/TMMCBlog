@@ -59,7 +59,7 @@
                         <td>@user.FirstName</td>
                         <td>@user.LastName</td>
                         <td>@user.Email</td>
-                        <td>@Html.DropDownListFor(x => x.Users, Model.UserRoles, new { id = user.ID, @class = "Users" })</td>
+                        <td>@Html.DropDownList("Role", new SelectList(Model.UserRoles, "ID", "Name", user.Role.Id), new { id = user.ID, @class = "Users" }) @*Model.UserRoles, user.Role.Id.ToString(), new { id = user.ID, @class = "Users" })*@</td>
                     </tr>
                     }
             </tbody>
