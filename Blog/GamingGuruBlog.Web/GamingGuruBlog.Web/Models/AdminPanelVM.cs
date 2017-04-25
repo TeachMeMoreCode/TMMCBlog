@@ -14,6 +14,5 @@ namespace GamingGuruBlog.Web.Models
         public List<StaticPage> StaticPages { get; set; }
         public List<BlogPost> BlogPosts { get; set; }
         public List<Role> UserRoles { get; set; }
-
     }
 }
