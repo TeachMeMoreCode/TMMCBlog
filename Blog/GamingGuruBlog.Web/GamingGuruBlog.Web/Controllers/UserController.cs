@@ -6,7 +6,7 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class UserController : Controller
     {
-        private IUserServices _userServices;
+        private readonly IUserServices _userServices;
 
         public UserController(IUserServices newUserServices)
         {

@@ -63,6 +63,7 @@ namespace GamingGuruBlog.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IRoleRepository>().To<RoleRepository>();
             kernel.Bind<IUserRepository>().To<UserRepository>();
             kernel.Bind<ITagRepository>().To<TagRepository>();
             kernel.Bind<IBlogPostRepository>().To<BlogPostRepository>();

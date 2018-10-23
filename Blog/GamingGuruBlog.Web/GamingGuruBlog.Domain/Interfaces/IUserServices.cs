@@ -12,5 +12,7 @@ namespace GamingGuruBlog.Domain.Interfaces
         User GetUser(string userID);
         void EditUser(User editedUser);
         List<User> GetAllUsers();
+        List<Role> GetAllRoles();
+        void AddRoleToUser(string userId, string roleId);
     }
 }

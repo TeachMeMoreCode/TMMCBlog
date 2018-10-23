@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using GamingGuruBlog.Domain.Models
+@using Microsoft.AspNet.Identity
 @model GamingGuruBlog.Web.Models.AdminPanelVM
 
 @{
@@ -40,12 +41,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var user in Model.Users)
+                @foreach (var user2 in Model.Users)
                 {
+                    User target = user2.Clone();
                     <tr>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Email</td>
+                        <td>@target.FirstName</td>
+                        <td>@target.LastName</td>
+                        <td>@target.Email</td>
+                        <td>
+                            <select id="@user2.ID">
+                                @foreach (SelectListItem role in Model.Roles)
+                                {
+                                    <option value="@role.Value" @(user2.RoleId.ToString() == role.Value ? "selected": "")>@role.Text</option>
+                                }
+                            </select>
+                        </td>
                         <td></td>
                     </tr>
                 }

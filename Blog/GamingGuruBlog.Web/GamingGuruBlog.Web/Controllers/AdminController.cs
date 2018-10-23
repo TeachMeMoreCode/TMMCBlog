@@ -6,10 +6,10 @@ namespace GamingGuruBlog.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private IBlogServices _blogServices;
-        private IStaticPageServices _staticPageServices;
-        private ICategoryServices _categoryServices;
-        private IUserServices _userServices;
+        private readonly IBlogServices _blogServices;
+        private readonly IStaticPageServices _staticPageServices;
+        private readonly ICategoryServices _categoryServices;
+        private readonly IUserServices _userServices;
 
         public AdminController(IBlogServices newBlogServices, IStaticPageServices newStaticPageServices, ICategoryServices newCategoryServices, IUserServices newUserServices)
         {
@@ -29,11 +29,11 @@ namespace GamingGuruBlog.Web.Controllers
             model.Categories = _categoryServices.GetAllCategories();
             model.StaticPages = _staticPageServices.GetAllStaticPages();
             model.BlogPosts = _blogServices.GetAllBlogPosts();
+            model.Roles = UIServices.CreateSelectListItemList(_userServices.GetAllRoles());
 
             return View(model);
         }
 
-       
 
     }
 }
