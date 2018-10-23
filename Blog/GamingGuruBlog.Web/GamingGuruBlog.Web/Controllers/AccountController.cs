@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using GamingGuruBlog.Domain.Interfaces;
+using GamingGuruBlog.Web.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,15 +19,18 @@ namespace GamingGuruBlog.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserServices _userServices;
 
-        public AccountController()
+        public AccountController(IUserServices userServices)
         {
+            _userServices = userServices;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserServices userServices )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _userServices = userServices;
         }
 
         public ApplicationSignInManager SignInManager
@@ -156,7 +161,9 @@ namespace GamingGuruBlog.Web.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    _userServices.AddRoleToUser(user.Id.ToString(), RoleId.User.ToString("D"));
+                    // Automatically give all new registers "User" role
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
