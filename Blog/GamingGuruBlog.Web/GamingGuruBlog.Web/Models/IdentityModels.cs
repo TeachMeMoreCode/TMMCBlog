@@ -20,7 +20,7 @@ namespace GamingGuruBlog.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
-
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

@@ -51,5 +51,10 @@ namespace GamingGuruBlog.Test
         {
             throw new NotImplementedException();
         }
+
+        public List<Category> GetOnlyUsedCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
